@@ -1,7 +1,7 @@
 import java.util.Arrays;
 import java.util.Random;
 
-public class MozartSequencer {
+public class MozartPhrase {
 	public final static String[] keys = { "C", "C#/Db", "D", "D#/Eb", "E", "F", "F#/Gb", "G", "G#/Ab", "A", "A#/Bb",
 			"B" };
 	public final static int[][] patterns = { { 1 }, { -1 }, { 1, 1 }, { -1, -1 }, { 1, 1, 1 }, { -1, -1, -1 },
@@ -17,14 +17,15 @@ public class MozartSequencer {
 	public final static int[][] scales = { { 2, 2, 1, 2, 2, 2, 1 }, { 2, 1, 2, 2, 1, 2, 2 } };
 	private int[] scale;
 
-	public MozartSequencer() {
+	public MozartPhrase(String key, int type) {
 		scale = new int[128];
+		this.setScale(key, type);
 		return;
 	}
 
-	public int[] createPhrase(String key, int octave) {
+	public MozartNote[] create(String key, int octave) {
 		try {
-			int[] phraseTemp = new int[100];
+			MozartNote[] phraseTemp = new MozartNote[100];
 			Random rand = new Random();
 			int i = 0;
 			boolean skip = false;
@@ -34,8 +35,8 @@ public class MozartSequencer {
 			int scaleIndex = 0;
 			int scaleIndexTemp = 0;
 			int startNote = 0;
-			for (i = 0; i < MozartSequencer.keys.length; i++) {
-				if (MozartSequencer.keys[i].equals(key)) {
+			for (i = 0; i < MozartPhrase.keys.length; i++) {
+				if (MozartPhrase.keys[i].equals(key)) {
 					startNote = (i + 60) + (octave * 12);
 					break;
 				}
@@ -46,12 +47,13 @@ public class MozartSequencer {
 					break;
 				}
 			}
+			i = 0;
 			do {
 				skip = false;
 				scaleIndexTemp = scaleIndex;
-				patternsIndex = rand.nextInt(MozartSequencer.patterns.length);
-				for (patternIndex = 0; patternIndex < MozartSequencer.patterns[patternsIndex].length; patternIndex++) {
-					scaleIndexTemp += MozartSequencer.patterns[patternsIndex][patternIndex];
+				patternsIndex = rand.nextInt(MozartPhrase.patterns.length);
+				for (patternIndex = 0; patternIndex < MozartPhrase.patterns[patternsIndex].length; patternIndex++) {
+					scaleIndexTemp += MozartPhrase.patterns[patternsIndex][patternIndex];
 					if (scaleIndexTemp < 0 | scaleIndexTemp > this.scale.length - 1) {
 						skip = true;
 						break;
@@ -64,49 +66,50 @@ public class MozartSequencer {
 					}
 				}
 				if (!skip) {
-					for (patternIndex = 0; patternIndex < MozartSequencer.patterns[patternsIndex].length; patternIndex++) {
-						scaleIndex += MozartSequencer.patterns[patternsIndex][patternIndex];
+					for (patternIndex = 0; patternIndex < MozartPhrase.patterns[patternsIndex].length; patternIndex++) {
+						scaleIndex += MozartPhrase.patterns[patternsIndex][patternIndex];
 						note = this.scale[scaleIndex];
-						phraseTemp[i] = note;
+						phraseTemp[i] = new MozartNote(MozartNote.TYPE_NORMAL, note, 34);
 						i += 1;
 						if (i > phraseTemp.length - 1) {
 							break;
 						}
+						System.out.print(">");
 					}
 				}
 			} while (i < phraseTemp.length);
-			return Arrays.copyOf(phraseTemp, phraseTemp.length);
+			return phraseTemp;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
 
-	public void setScale(String key, int type) {
+	private void setScale(String key, int type) {
 		try {
 			int[] scaleTemp = new int[128];
 			int i = 0;
 			int note = 0;
 			int scalesIndex = 0;
 			int scaleTempIndex = 0;
-			for (i = 0; i < MozartSequencer.keys.length; i++) {
-				if (MozartSequencer.keys[i].equals(key)) {
+			for (i = 0; i < MozartPhrase.keys.length; i++) {
+				if (MozartPhrase.keys[i].equals(key)) {
 					note = i;
 					break;
 				}
 			}
-			if (type == MozartSequencer.SCALE_MAJOR) {
+			if (type == MozartPhrase.SCALE_MAJOR) {
 				do {
 					scaleTemp[scaleTempIndex] = note;
-					note = note + MozartSequencer.scales[MozartSequencer.SCALE_MAJOR][scalesIndex];
-					scalesIndex = (scalesIndex + 1) % MozartSequencer.scales.length;
+					note = note + MozartPhrase.scales[MozartPhrase.SCALE_MAJOR][scalesIndex];
+					scalesIndex = (scalesIndex + 1) % MozartPhrase.scales.length;
 					scaleTempIndex += 1;
 				} while (note < 128);
-			} else if (type == MozartSequencer.SCALE_MINOR) {
+			} else if (type == MozartPhrase.SCALE_MINOR) {
 				do {
 					scaleTemp[scaleTempIndex] = note;
-					note = note + MozartSequencer.scales[MozartSequencer.SCALE_MAJOR][scalesIndex];
-					scalesIndex = (scalesIndex + 1) % MozartSequencer.scales.length;
+					note = note + MozartPhrase.scales[MozartPhrase.SCALE_MAJOR][scalesIndex];
+					scalesIndex = (scalesIndex + 1) % MozartPhrase.scales.length;
 					scaleTempIndex += 1;
 				} while (note < 128);
 			}

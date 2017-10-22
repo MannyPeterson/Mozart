@@ -7,11 +7,9 @@ import javax.sound.midi.Synthesizer;
 public class MozartMain {
 
 	public static void main(String[] args) {
-		MozartSequencer mozart = new MozartSequencer();
-		int[] phrase = new int[100];
+		MozartNote[] phrase = new MozartNote[100];
+		phrase = new MozartPhrase("C", MozartPhrase.SCALE_MAJOR).create("C", MozartPhrase.OCTAVE_NORMAL);
 		int i;
-		mozart.setScale("C", MozartSequencer.SCALE_MAJOR);
-		phrase = mozart.createPhrase("C", MozartSequencer.OCTAVE_NORMAL);
 		try {
 
 			Synthesizer synth = MidiSystem.getSynthesizer();
@@ -22,9 +20,10 @@ public class MozartMain {
 			channel.allSoundOff();
 			Thread.sleep(5000);
 			for (i = 0; i < phrase.length; i++) {
-				channel.noteOn(phrase[i], 1207);
+				System.out.println(i);
+				channel.noteOn(phrase[i].getNote(), 127);
 				Thread.sleep(200);
-				channel.noteOff(phrase[i]);
+				channel.noteOff(phrase[i].getNote());
 			}
 
 		} catch (MidiUnavailableException e) {
