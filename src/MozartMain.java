@@ -7,11 +7,13 @@ import javax.sound.midi.Synthesizer;
 public class MozartMain {
 
 	public static void main(String[] args) {
-		int i;
 		int scale[];
-		MozartScale mozartScale = new MozartScale("C",MozartScale.SCALE_MAJOR);
+		MozartScale mozartScale;
+		
+		mozartScale = new MozartScale("C",MozartScale.SCALE_MAJOR);
 		scale = mozartScale.getScale();
 
+		
 		
 		/*
 		MozartNote[] phrase = new MozartNote[100];
