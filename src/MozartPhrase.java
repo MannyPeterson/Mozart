@@ -24,17 +24,18 @@ public class MozartPhrase {
 	}
 
 	public MozartNote[] create(String key, int octave) {
+		MozartNote[] phraseTemp = new MozartNote[100];
+		Random rand = new Random();
+		int i = 0;
+		boolean skip = false;
+		int note = 0;
+		int patternIndex = 0;
+		int patternsIndex = 0;
+		int scaleIndex = 0;
+		int scaleIndexTemp = 0;
+		int startNote = 0;
 		try {
-			MozartNote[] phraseTemp = new MozartNote[100];
-			Random rand = new Random();
-			int i = 0;
-			boolean skip = false;
-			int note = 0;
-			int patternIndex = 0;
-			int patternsIndex = 0;
-			int scaleIndex = 0;
-			int scaleIndexTemp = 0;
-			int startNote = 0;
+
 			for (i = 0; i < MozartPhrase.keys.length; i++) {
 				if (MozartPhrase.keys[i].equals(key)) {
 					startNote = (i + 60) + (octave * 12);
@@ -85,15 +86,14 @@ public class MozartPhrase {
 		}
 	}
 
-	private void setScale(String key, int type) {
-		int[] scaleTemp;
+	private void setScale(String key, int type) throws MozartRuntimeException {
 		boolean foundKey = false;
 		int i = 0;
 		int note = 0;
 		int scalesIndex = 0;
+		int[] scaleTemp = null;
 		int scaleTempIndex = 0;
 		try {
-			scaleTemp = new int[128];
 			if(type < MozartPhrase.SCALE_MAJOR | type > MozartPhrase.SCALE_MINOR) {
 				throw new MozartRuntimeException(this.getClass().getName() + ": invalid scale type.");
 			}
@@ -107,6 +107,7 @@ public class MozartPhrase {
 			if(foundKey == false) {
 				throw new MozartRuntimeException(this.getClass().getName() + ": invalid scale key.");
 			}
+			scaleTemp = new int[128];
 			if (type == MozartPhrase.SCALE_MAJOR) {
 				do {
 					scaleTemp[scaleTempIndex] = note;

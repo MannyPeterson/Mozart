@@ -1,16 +1,13 @@
 
 public class MozartNote {
-	public static final int DEFAULT_TTL = 32;
 	public static final int TYPE_NORMAL = 0;
 	public static final int TYPE_REST = 1;
-	private int length;
+	private int length; /* Number of ticks that must elapse before next note in sequence is played */
 	private int note;
-	private int ttl;
 	private int type;
 
 	public MozartNote(int type, int note, int length) throws MozartRuntimeException {
 		try {
-			this.ttl = MozartNote.DEFAULT_TTL;
 			this.setType(type);
 			this.setNote(note);
 			this.setLength(length);
@@ -28,29 +25,14 @@ public class MozartNote {
 		return this.note;
 	}
 
-	public int getTTL() {
-		return this.ttl;
-	}
-
 	public int getType() {
 		return this.type;
-	}
-
-	public boolean isAlive() {
-		if (this.getTTL() > 0) {
-			return true;
-		}
-		return false;
 	}
 
 	private void setLength(int length) throws MozartRuntimeException {
 		try {
 			if (length < 1) {
-				throw new MozartRuntimeException(this.getClass().getName() + ": note length less than zero.");
-			}
-			if (length > this.ttl) {
-				throw new MozartRuntimeException(
-						this.getClass().getName() + ": note length exceeds time to live (TTL).");
+				throw new MozartRuntimeException(this.getClass().getName() + ": note length is equal to or less than zero.");
 			}
 			this.length = length;
 		} catch (MozartRuntimeException e) {
@@ -61,7 +43,7 @@ public class MozartNote {
 	private void setNote(int note) throws MozartRuntimeException {
 		try {
 			if (note < 0 | note > 127) {
-				throw new MozartRuntimeException(this.getClass().getName() + ": note out of range.");
+				throw new MozartRuntimeException(this.getClass().getName() + ": note value out of range.");
 			}
 			this.note = note;
 		} catch (MozartRuntimeException e) {
@@ -80,8 +62,4 @@ public class MozartNote {
 		}
 	}
 
-	public void tick() {
-		this.ttl -= 1;
-		return;
-	}
 }
