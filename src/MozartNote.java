@@ -11,19 +11,9 @@ public class MozartNote {
 	public MozartNote(int type, int note, int length) throws MozartRuntimeException {
 		try {
 			this.ttl = MozartNote.DEFAULT_TTL;
-			if (type < MozartNote.TYPE_NORMAL | type > MozartNote.TYPE_REST) {
-				throw new MozartRuntimeException(this.getClass().getName() + ": invalid note type.");
-			}
-			if (note < 0 | note > 127) {
-				throw new MozartRuntimeException(this.getClass().getName() + ": note out of range.");
-			}
-			if (length > this.ttl) {
-				throw new MozartRuntimeException(
-						this.getClass().getName() + ": note length must not exceed time to live (TTL).");
-			}
-			this.type = type;
-			this.note = note;
-			this.length = length;
+			this.setType(type);
+			this.setNote(note);
+			this.setLength(length);
 			return;
 		} catch (MozartRuntimeException e) {
 			throw new MozartRuntimeException(e);
@@ -51,6 +41,43 @@ public class MozartNote {
 			return true;
 		}
 		return false;
+	}
+
+	private void setLength(int length) throws MozartRuntimeException {
+		try {
+			if (length < 1) {
+				throw new MozartRuntimeException(this.getClass().getName() + ": note length less than zero.");
+			}
+			if (length > this.ttl) {
+				throw new MozartRuntimeException(
+						this.getClass().getName() + ": note length exceeds time to live (TTL).");
+			}
+			this.length = length;
+		} catch (MozartRuntimeException e) {
+			throw new MozartRuntimeException(e);
+		}
+	}
+
+	private void setNote(int note) throws MozartRuntimeException {
+		try {
+			if (note < 0 | note > 127) {
+				throw new MozartRuntimeException(this.getClass().getName() + ": note out of range.");
+			}
+			this.note = note;
+		} catch (MozartRuntimeException e) {
+			throw new MozartRuntimeException(e);
+		}
+	}
+
+	private void setType(int type) throws MozartRuntimeException {
+		try {
+			if (type < MozartNote.TYPE_NORMAL | type > MozartNote.TYPE_REST) {
+				throw new MozartRuntimeException(this.getClass().getName() + ": invalid note type.");
+			}
+			this.type = type;
+		} catch (MozartRuntimeException e) {
+			throw new MozartRuntimeException(e);
+		}
 	}
 
 	public void tick() {
