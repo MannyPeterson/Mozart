@@ -47,11 +47,11 @@ public class MozartScale {
 	}
 
 	public String getKey() {
-		return new String(this.key);
+		return this.key;
 	}
 
 	public int[] getScale() {
-		return Arrays.copyOf(this.scale, this.scale.length);
+		return this.scale;
 	}
 
 	public int getType() {
@@ -74,7 +74,7 @@ public class MozartScale {
 			if (foundKey == false) {
 				throw new MozartRuntimeException(this.getClass().getName() + ": invalid scale key.");
 			}
-			this.key = new String(key);
+			this.key = key;
 			return;
 		} catch (MozartRuntimeException e) {
 			throw new MozartRuntimeException(e);
@@ -86,7 +86,7 @@ public class MozartScale {
 			if (scale == null) {
 				throw new MozartRuntimeException(this.getClass().getName() + ": scale is null.");
 			}
-			this.scale = Arrays.copyOf(scale, scale.length);
+			this.scale = scale;
 			return;
 		} catch (MozartRuntimeException e) {
 			throw new MozartRuntimeException(e);
@@ -98,7 +98,6 @@ public class MozartScale {
 			if (type < MozartScale.SCALE_MAJOR | type > MozartScale.SCALE_MINOR) {
 				throw new MozartRuntimeException(this.getClass().getName() + ": invalid scale type.");
 			}
-
 			this.type = type;
 			return;
 		} catch (MozartRuntimeException e) {
