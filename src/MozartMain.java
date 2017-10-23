@@ -5,21 +5,20 @@ import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Synthesizer;
 
 public class MozartMain {
-
 	public static void main(String[] args) {
-
+		/*
+		 * 
+		 * More shshshshshhhhhhhhh (per Sam)
+		 * 
+		 */
 		MozartScale mozartScale;
 		MozartPhrase mozartPhrase;
 		MozartNote[] phrase;
-
-		mozartScale = new MozartScale("C", MozartScale.SCALE_MAJOR);
-		mozartPhrase = new MozartPhrase(mozartScale, 0);
-		phrase = new MozartNote[100];
-
+		mozartScale = new MozartScale("C#/Db", MozartScale.SCALE_MINOR);
+		mozartPhrase = new MozartPhrase(mozartScale, 1);
 		phrase = mozartPhrase.getPhrase();
 		int i;
 		try {
-
 			Synthesizer synth = MidiSystem.getSynthesizer();
 			synth.open();
 			MidiChannel[] channels = synth.getChannels();
@@ -33,13 +32,10 @@ public class MozartMain {
 				Thread.sleep(200);
 				channel.noteOff(phrase[i].getNote());
 			}
-
 		} catch (MidiUnavailableException e) {
 			e.printStackTrace();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-
 	}
-
 }
