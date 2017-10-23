@@ -13,6 +13,7 @@ public class MozartPhrase {
 	public MozartPhrase(MozartScale scale, int octave) throws MozartRuntimeException {
 		try {
 			this.setScale(scale);
+			this.setKey(scale);
 			this.setOctave(octave);
 			this.create();
 			return;
@@ -33,12 +34,9 @@ public class MozartPhrase {
 		int scaleIndexTemp = 0;
 		int startNote = 0;
 		try {
-
 			phraseTemp = new MozartNote[100];
 			rand = new Random();
-
 			startNote = (this.getKey() + 60) + (octave * 12);
-
 			for (i = 0; i < this.getScale().length; i++) {
 				if (this.getScale()[i] >= startNote) {
 					scaleIndex = i;
@@ -100,6 +98,21 @@ public class MozartPhrase {
 		return this.scale;
 	}
 
+	private void setKey(MozartScale scale) throws MozartRuntimeException {
+		try {
+			if (scale == null) {
+				throw new MozartRuntimeException(this.getClass().getName() + ": scale is null.");
+			}
+			if (scale.getKey() < 0 | scale.getKey() > 127) {
+				throw new MozartRuntimeException(this.getClass().getName() + ": key out of range.");
+			}
+			this.key = scale.getKey();
+			return;
+		} catch (MozartRuntimeException e) {
+			throw new MozartRuntimeException(e);
+		}
+	}
+
 	private void setOctave(int octave) throws MozartRuntimeException {
 		try {
 			if (octave < -3 | octave > 3) {
@@ -128,7 +141,9 @@ public class MozartPhrase {
 			if (scale == null) {
 				throw new MozartRuntimeException(this.getClass().getName() + ": scale is null.");
 			}
-			this.key = scale.getKey();
+			if (scale.getScale() == null) {
+				throw new MozartRuntimeException(this.getClass().getName() + ": scale is null.");
+			}
 			this.scale = scale.getScale();
 			return;
 		} catch (MozartRuntimeException e) {
