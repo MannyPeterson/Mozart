@@ -1,7 +1,7 @@
 import java.util.Arrays;
 
 public class MozartScale {
-	private final static String[] keys = { "C", "C#/Db", "D", "D#/Eb", "E", "F", "F#/Gb", "G", "G#/Ab", "A", "A#/Bb",
+	public final static String[] keys = { "C", "C#/Db", "D", "D#/Eb", "E", "F", "F#/Gb", "G", "G#/Ab", "A", "A#/Bb",
 			"B" };
 	public final static int SCALE_MAJOR = 0;
 	public final static int SCALE_MINOR = 1;
@@ -28,18 +28,18 @@ public class MozartScale {
 		int scaleTempIndex = 0;
 		try {
 			for (note = 0; note < MozartScale.keys.length; note++) {
-				if (MozartScale.keys[note].equals(key)) {
+				if (MozartScale.keys[note].equals(this.getKey())) {
 					break;
 				}
 			}
 			scaleTemp = new int[128];
 			do {
 				scaleTemp[scaleTempIndex] = note;
-				note = note + MozartScale.scaleInterval[type][scaleIntervalIndex];
-				scaleIntervalIndex = (scaleIntervalIndex + 1) % MozartScale.scaleInterval[type].length;
+				note = note + MozartScale.scaleInterval[this.getType()][scaleIntervalIndex];
+				scaleIntervalIndex = (scaleIntervalIndex + 1) % MozartScale.scaleInterval[this.getType()].length;
 				scaleTempIndex += 1;
 			} while (note < 128);
-			this.scale = Arrays.copyOf(scaleTemp, scaleTempIndex);
+			this.setScale(Arrays.copyOf(scaleTemp, scaleTempIndex)); 
 			return;
 		} catch (MozartRuntimeException e) {
 			throw new MozartRuntimeException(e);
@@ -58,7 +58,7 @@ public class MozartScale {
 		return this.type;
 	}
 
-	private void setKey(String key) {
+	private void setKey(String key) throws MozartRuntimeException {
 		boolean foundKey = false;
 		int i = 0;
 		try {
@@ -81,7 +81,19 @@ public class MozartScale {
 		}
 	}
 
-	private void setType(int type) {
+	private void setScale(int[] scale) throws MozartRuntimeException {
+		try {
+			if (scale == null) {
+				throw new MozartRuntimeException(this.getClass().getName() + ": scale is null.");
+			}
+			this.scale = Arrays.copyOf(scale, scale.length);
+			return;
+		} catch (MozartRuntimeException e) {
+			throw new MozartRuntimeException(e);
+		}
+	}
+
+	private void setType(int type) throws MozartRuntimeException {
 		try {
 			if (type < MozartScale.SCALE_MAJOR | type > MozartScale.SCALE_MINOR) {
 				throw new MozartRuntimeException(this.getClass().getName() + ": invalid scale type.");

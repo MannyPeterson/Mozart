@@ -1,31 +1,37 @@
+
 import java.util.Arrays;
 import java.util.Random;
 
 public class MozartPhrase {
-	public final static String[] keys = { "C", "C#/Db", "D", "D#/Eb", "E", "F", "F#/Gb", "G", "G#/Ab", "A", "A#/Bb",
-			"B" };
-	public final static int[][] patterns = { { 1 }, { -1 }, { 1, 1 }, { -1, -1 }, { 1, 1, 1 }, { -1, -1, -1 },
+	private final static int[][] patterns = { { 1 }, { -1 }, { 1, 1 }, { -1, -1 }, { 1, 1, 1 }, { -1, -1, -1 },
 			{ 1, 1, 1, 1 }, { -1, -1, -1, -1 }, { 1, -1 }, { -1, 1 }, { 3 }, { -3 }, { 4 }, { -4 }, { 5 }, { -5 },
 			{ 6 }, { -6 } };
-	public final static int SCALE_MAJOR = 0;
-	public final static int SCALE_MINOR = 1;
-	public final static int OCTAVE_NORMAL = 0;
-	public final static int OCTAVE_UP_ONE = 1;
-	public final static int OCTAVE_DOWN_OWN = -1;
-	public final static int OCTAVE_UP_TWO = 2;
-	public final static int OCTAVE_DOWN_TWO = -2;
-	public final static int[][] scales = { { 2, 2, 1, 2, 2, 2, 1 }, { 2, 1, 2, 2, 1, 2, 2 } };
-	private int[] scale;
+	private int octave;
+	private MozartNote[] phrase;
+	private MozartScale scale;
 
-	public MozartPhrase(String key, int type) {
-		scale = new int[128];
-		this.setScale(key, type);
-		return;
+	public MozartPhrase(MozartScale scale, int octave) throws MozartRuntimeException {
+		try {
+			this.setScale(scale);
+			this.setOctave(octave);
+			this.create();
+			return;
+		} catch (MozartRuntimeException e) {
+			throw new MozartRuntimeException(e);
+		}
+	}
+	
+	public MozartScale getScale() {
+		return this.scale;
+	}
+	
+	public int getOctave() {
+		return this.octave;
 	}
 
-	public MozartNote[] create(String key, int octave) {
-		MozartNote[] phraseTemp = new MozartNote[100];
-		Random rand = new Random();
+	public void create() {
+		MozartNote[] phraseTemp = null;
+		Random rand = null;
 		int i = 0;
 		boolean skip = false;
 		int note = 0;
@@ -36,14 +42,17 @@ public class MozartPhrase {
 		int startNote = 0;
 		try {
 
-			for (i = 0; i < MozartPhrase.keys.length; i++) {
-				if (MozartPhrase.keys[i].equals(key)) {
+			phraseTemp  = new MozartNote[100];
+			rand = new Random();
+			
+			for (i = 0; i < MozartScale.keys.length; i++) {
+				if (MozartScale.keys[i].equals(this.getScale().getKey())) {
 					startNote = (i + 60) + (octave * 12);
 					break;
 				}
 			}
-			for (i = 0; i < this.scale.length; i++) {
-				if (this.scale[i] >= startNote) {
+			for (i = 0; i < this.scale.getScale().length; i++) {
+				if (this.scale.getScale()[i] >= startNote) {
 					scaleIndex = i;
 					break;
 				}
@@ -86,44 +95,35 @@ public class MozartPhrase {
 		}
 	}
 
-	private void setScale(String key, int type) throws MozartRuntimeException {
-		boolean foundKey = false;
-		int i = 0;
-		int note = 0;
-		int scalesIndex = 0;
-		int[] scaleTemp = null;
-		int scaleTempIndex = 0;
+	private void setOctave(int octave) throws MozartRuntimeException {
 		try {
-			if(type < MozartPhrase.SCALE_MAJOR | type > MozartPhrase.SCALE_MINOR) {
-				throw new MozartRuntimeException(this.getClass().getName() + ": invalid scale type.");
+			if (octave < -3 | octave > 3) {
+				throw new MozartRuntimeException(this.getClass().getName() + ": octave out of range.");
 			}
-			for (i = 0; i < MozartPhrase.keys.length; i++) {
-				if (MozartPhrase.keys[i].equals(key)) {
-					note = i;
-					foundKey = true;
-					break;
-				}
+			this.octave = octave;
+		} catch (MozartRuntimeException e) {
+			throw new MozartRuntimeException(e);
+		}
+	}
+	
+	private void setPhrase(MozartNote[] phrase) throws MozartRuntimeException {
+		try {
+			if (phrase == null) {
+				throw new MozartRuntimeException(this.getClass().getName() + ": phrase is null.");
 			}
-			if(foundKey == false) {
-				throw new MozartRuntimeException(this.getClass().getName() + ": invalid scale key.");
+			this.phrase = phrase;
+			return;
+		} catch (MozartRuntimeException e) {
+			throw new MozartRuntimeException(e);
+		}
+	}
+
+	private void setScale(MozartScale scale) throws MozartRuntimeException {
+		try {
+			if (scale == null) {
+				throw new MozartRuntimeException(this.getClass().getName() + ": scale is null.");
 			}
-			scaleTemp = new int[128];
-			if (type == MozartPhrase.SCALE_MAJOR) {
-				do {
-					scaleTemp[scaleTempIndex] = note;
-					note = note + MozartPhrase.scales[MozartPhrase.SCALE_MAJOR][scalesIndex];
-					scalesIndex = (scalesIndex + 1) % MozartPhrase.scales.length;
-					scaleTempIndex += 1;
-				} while (note < 128);
-			} else if (type == MozartPhrase.SCALE_MINOR) {
-				do {
-					scaleTemp[scaleTempIndex] = note;
-					note = note + MozartPhrase.scales[MozartPhrase.SCALE_MAJOR][scalesIndex];
-					scalesIndex = (scalesIndex + 1) % MozartPhrase.scales.length;
-					scaleTempIndex += 1;
-				} while (note < 128);
-			}
-			this.scale = Arrays.copyOf(scaleTemp, scaleTempIndex);
+			this.scale = scale;
 			return;
 		} catch (MozartRuntimeException e) {
 			throw new MozartRuntimeException(e);
