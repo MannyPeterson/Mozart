@@ -1,14 +1,14 @@
 
-import java.util.Arrays;
 import java.util.Random;
 
 public class MozartPhrase {
 	private final static int[][] patterns = { { 1 }, { -1 }, { 1, 1 }, { -1, -1 }, { 1, 1, 1 }, { -1, -1, -1 },
 			{ 1, 1, 1, 1 }, { -1, -1, -1, -1 }, { 1, -1 }, { -1, 1 }, { 3 }, { -3 }, { 4 }, { -4 }, { 5 }, { -5 },
 			{ 6 }, { -6 } };
+	private int key;
 	private int octave;
 	private MozartNote[] phrase;
-	private MozartScale scale;
+	private int[] scale;
 
 	public MozartPhrase(MozartScale scale, int octave) throws MozartRuntimeException {
 		try {
@@ -19,14 +19,6 @@ public class MozartPhrase {
 		} catch (MozartRuntimeException e) {
 			throw new MozartRuntimeException(e);
 		}
-	}
-	
-	public MozartScale getScale() {
-		return this.scale;
-	}
-	
-	public int getOctave() {
-		return this.octave;
 	}
 
 	public void create() {
@@ -42,17 +34,13 @@ public class MozartPhrase {
 		int startNote = 0;
 		try {
 
-			phraseTemp  = new MozartNote[100];
+			phraseTemp = new MozartNote[100];
 			rand = new Random();
-			
-			for (i = 0; i < MozartScale.keys.length; i++) {
-				if (MozartScale.keys[i].equals(this.getScale().getKey())) {
-					startNote = (i + 60) + (octave * 12);
-					break;
-				}
-			}
-			for (i = 0; i < this.scale.getScale().length; i++) {
-				if (this.scale.getScale()[i] >= startNote) {
+
+			startNote = (this.getKey() + 60) + (octave * 12);
+
+			for (i = 0; i < this.getScale().length; i++) {
+				if (this.getScale()[i] >= startNote) {
 					scaleIndex = i;
 					break;
 				}
@@ -88,11 +76,28 @@ public class MozartPhrase {
 					}
 				}
 			} while (i < phraseTemp.length);
-			return phraseTemp;
+			this.setPhrase(phraseTemp);
+			return;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return;
 		}
+	}
+
+	public int getKey() {
+		return this.key;
+	}
+
+	public int getOctave() {
+		return this.octave;
+	}
+
+	public MozartNote[] getPhrase() {
+		return this.phrase;
+	}
+
+	public int[] getScale() {
+		return this.scale;
 	}
 
 	private void setOctave(int octave) throws MozartRuntimeException {
@@ -105,7 +110,7 @@ public class MozartPhrase {
 			throw new MozartRuntimeException(e);
 		}
 	}
-	
+
 	private void setPhrase(MozartNote[] phrase) throws MozartRuntimeException {
 		try {
 			if (phrase == null) {
@@ -123,7 +128,8 @@ public class MozartPhrase {
 			if (scale == null) {
 				throw new MozartRuntimeException(this.getClass().getName() + ": scale is null.");
 			}
-			this.scale = scale;
+			this.key = scale.getKey();
+			this.scale = scale.getScale();
 			return;
 		} catch (MozartRuntimeException e) {
 			throw new MozartRuntimeException(e);

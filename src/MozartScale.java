@@ -6,7 +6,7 @@ public class MozartScale {
 	public final static int SCALE_MAJOR = 0;
 	public final static int SCALE_MINOR = 1;
 	private final static int[][] scaleInterval = { { 2, 2, 1, 2, 2, 2, 1 }, { 2, 1, 2, 2, 1, 2, 2 } };
-	private String key;
+	private int key;
 	private int[] scale;
 	private int type;
 
@@ -27,12 +27,8 @@ public class MozartScale {
 		int[] scaleTemp = null;
 		int scaleTempIndex = 0;
 		try {
-			for (note = 0; note < MozartScale.keys.length; note++) {
-				if (MozartScale.keys[note].equals(this.getKey())) {
-					break;
-				}
-			}
 			scaleTemp = new int[128];
+			note = this.getKey();
 			do {
 				scaleTemp[scaleTempIndex] = note;
 				note = note + MozartScale.scaleInterval[this.getType()][scaleIntervalIndex];
@@ -46,7 +42,7 @@ public class MozartScale {
 		}
 	}
 
-	public String getKey() {
+	public int getKey() {
 		return this.key;
 	}
 
@@ -74,7 +70,7 @@ public class MozartScale {
 			if (foundKey == false) {
 				throw new MozartRuntimeException(this.getClass().getName() + ": invalid scale key.");
 			}
-			this.key = key;
+			this.key = i;
 			return;
 		} catch (MozartRuntimeException e) {
 			throw new MozartRuntimeException(e);
