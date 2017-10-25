@@ -19,12 +19,12 @@ public enum MozartNote {
 	A_SHARP("A#", 10),
 	B("B", 11);
 
-	private String note;
+	private String string;
 	private int value;
 
 	private MozartNote(String note, int value) throws MozartRuntimeException {
 		try {
-			this.setNote(note);
+			this.setString(note);
 			this.setValue(value);
 			return;
 		} catch (MozartRuntimeException e) {
@@ -32,20 +32,20 @@ public enum MozartNote {
 		}
 	}
 	
-	public String getNote() {
-		return this.note;
+	public String getString() {
+		return this.string;
 	}
 
 	public int getValue() {
 		return this.value;
 	}
 
-	private void setNote(String note) throws MozartRuntimeException {
+	private void setString(String note) throws MozartRuntimeException {
 		try {
 			if (note == null) {
 				throw new MozartRuntimeException(this.getClass().getName() + ": note is null.");
 			}
-			this.note = note;
+			this.string = note;
 			return;
 		} catch (MozartRuntimeException e) {
 			throw new MozartRuntimeException(e);
