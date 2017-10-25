@@ -1,8 +1,8 @@
 package org.codehamster;
 
 public enum MozartStep {
-	HALF("H", 1),
-	WHOLE("W", 2);
+	HALF("HALF", 1),
+	WHOLE("WHOLE", 2);
 
 	private String string;
 	private int value;
