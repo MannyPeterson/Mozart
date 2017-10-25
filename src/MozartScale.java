@@ -1,6 +1,9 @@
 import java.util.Arrays;
 
+import org.codehamster.MozartRuntimeException;
+
 public class MozartScale {
+	
 	public final static String[] keys = { "C", "C#/Db", "D", "D#/Eb", "E", "F", "F#/Gb", "G", "G#/Ab", "A", "A#/Bb",
 			"B" };
 	public final static int SCALE_MAJOR = 0;

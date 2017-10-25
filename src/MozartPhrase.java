@@ -1,13 +1,15 @@
 
 import java.util.Random;
 
+import org.codehamster.MozartRuntimeException;
+
 public class MozartPhrase {
-	private final static int[][] patterns = { { 1 }, { -1 }, { 1, 1 }, { -1, -1 }, { 1, 1, 1 }, { -1, -1, -1 },
-			{ 1, 1, 1, 1 }, { -1, -1, -1, -1 }, { 1, -1 }, { -1, 1 }, { 3 }, { -3 }, { 4 }, { -4 }, { 5 }, { -5 },
-			{ 6 }, { -6 } };
+	private final static int[][] patterns = { {1},{2}};
+
+	private final static int[] lengths = { 4, 8, 16, 32 };
 	private int key;
 	private int octave;
-	private MozartNote[] phrase;
+	private MozartNotes[] phrase;
 	private int[] scale;
 
 	public MozartPhrase(MozartScale scale, int octave) throws MozartRuntimeException {
@@ -23,18 +25,19 @@ public class MozartPhrase {
 	}
 
 	public void create() {
-		MozartNote[] phraseTemp = null;
+		MozartNotes[] phraseTemp = null;
 		Random rand = null;
 		int i = 0;
 		boolean skip = false;
 		int note = 0;
+		int length = 0;
 		int patternIndex = 0;
 		int patternsIndex = 0;
 		int scaleIndex = 0;
 		int scaleIndexTemp = 0;
 		int startNote = 0;
 		try {
-			phraseTemp = new MozartNote[100];
+			phraseTemp = new MozartNotes[100];
 			rand = new Random();
 			startNote = (this.getKey() + 60) + (octave * 12);
 			for (i = 0; i < this.getScale().length; i++) {
@@ -55,22 +58,22 @@ public class MozartPhrase {
 						break;
 					} else {
 						note = this.scale[scaleIndexTemp];
-						if (note < startNote - 36 | note > startNote + 36) {
+						if (note < startNote - 24 | note > startNote + 36) {
 							skip = true;
 							break;
 						}
 					}
 				}
+				length = 8;
 				if (!skip) {
 					for (patternIndex = 0; patternIndex < MozartPhrase.patterns[patternsIndex].length; patternIndex++) {
 						scaleIndex += MozartPhrase.patterns[patternsIndex][patternIndex];
 						note = this.scale[scaleIndex];
-						phraseTemp[i] = new MozartNote(MozartNote.TYPE_NORMAL, note, 34);
+						phraseTemp[i] = new MozartNotes(MozartNotes.TYPE_NORMAL, note, length);
 						i += 1;
 						if (i > phraseTemp.length - 1) {
 							break;
 						}
-						System.out.print(">");
 					}
 				}
 			} while (i < phraseTemp.length);
@@ -90,7 +93,7 @@ public class MozartPhrase {
 		return this.octave;
 	}
 
-	public MozartNote[] getPhrase() {
+	public MozartNotes[] getPhrase() {
 		return this.phrase;
 	}
 
@@ -124,7 +127,7 @@ public class MozartPhrase {
 		}
 	}
 
-	private void setPhrase(MozartNote[] phrase) throws MozartRuntimeException {
+	private void setPhrase(MozartNotes[] phrase) throws MozartRuntimeException {
 		try {
 			if (phrase == null) {
 				throw new MozartRuntimeException(this.getClass().getName() + ": phrase is null.");

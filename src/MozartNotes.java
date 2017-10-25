@@ -1,12 +1,13 @@
+import org.codehamster.MozartRuntimeException;
 
-public class MozartNote {
+public class MozartNotes {
 	public static final int TYPE_NORMAL = 0;
 	public static final int TYPE_REST = 1;
 	private int length; /* Number of ticks that must elapse before next note in sequence is played */
 	private int note;
 	private int type;
 
-	public MozartNote(int type, int note, int length) throws MozartRuntimeException {
+	public MozartNotes(int type, int note, int length) throws MozartRuntimeException {
 		try {
 			this.setType(type);
 			this.setNote(note);
@@ -53,7 +54,7 @@ public class MozartNote {
 
 	private void setType(int type) throws MozartRuntimeException {
 		try {
-			if (type < MozartNote.TYPE_NORMAL | type > MozartNote.TYPE_REST) {
+			if (type < MozartNotes.TYPE_NORMAL | type > MozartNotes.TYPE_REST) {
 				throw new MozartRuntimeException(this.getClass().getName() + ": invalid note type.");
 			}
 			this.type = type;

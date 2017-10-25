@@ -1,3 +1,4 @@
+package org.codehamster;
 
 public class MozartRuntimeException extends RuntimeException {
 

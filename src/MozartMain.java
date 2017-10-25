@@ -13,11 +13,12 @@ public class MozartMain {
 		 */
 		MozartScale mozartScale;
 		MozartPhrase mozartPhrase;
-		MozartNote[] phrase;
-		mozartScale = new MozartScale("C#/Db", MozartScale.SCALE_MINOR);
+		MozartNotes[] phrase;
+		mozartScale = new MozartScale("C", MozartScale.SCALE_MAJOR);
 		mozartPhrase = new MozartPhrase(mozartScale, 1);
 		phrase = mozartPhrase.getPhrase();
 		int i;
+		int j;
 		try {
 			Synthesizer synth = MidiSystem.getSynthesizer();
 			synth.open();
@@ -28,9 +29,17 @@ public class MozartMain {
 			Thread.sleep(5000);
 			for (i = 0; i < phrase.length; i++) {
 				System.out.println(i);
-				channel.noteOn(phrase[i].getNote(), 127);
-				Thread.sleep(200);
-				channel.noteOff(phrase[i].getNote());
+				if (phrase[i].getType() == MozartNotes.TYPE_NORMAL) {
+					channel.noteOn(phrase[i].getNote(), 127);
+					for (j = 0; j < phrase[i].getLength(); j++) {
+						Thread.sleep(25);
+					}
+					channel.noteOff(phrase[i].getNote());
+				} else if (phrase[i].getType() == MozartNotes.TYPE_REST) {
+					for (j = 0; j < phrase[i].getLength(); j++) {
+						Thread.sleep(25);
+					}
+				}
 			}
 		} catch (MidiUnavailableException e) {
 			e.printStackTrace();
