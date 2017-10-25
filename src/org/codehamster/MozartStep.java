@@ -7,9 +7,9 @@ public enum MozartStep {
 	private String string;
 	private int value;
 
-	private MozartStep(String note, int value) throws MozartRuntimeException {
+	private MozartStep(String string, int value) throws MozartRuntimeException {
 		try {
-			this.setString(note);
+			this.setString(string);
 			this.setValue(value);
 			return;
 		} catch (MozartRuntimeException e) {
