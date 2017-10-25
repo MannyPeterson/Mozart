@@ -1,28 +1,13 @@
 package org.codehamster;
 
-public enum MozartNote {
-	C("C", 0),
-	C_SHARP("C#", 1),
-	D_FLAT("Db", 1),
-	D("D", 2),
-	D_SHARP("D#", 3),	
-	E_FLAT("Eb", 3),
-	E("E", 4),
-	F("F", 5),
-	F_SHARP("F#", 6),
-	G_FLAT("Gb", 6),
-	G("G", 7),
-	G_SHARP("G#", 8),
-	A_FLAT("Ab", 8),
-	A("A", 9),
-	B_FLAT("Bb", 10),
-	A_SHARP("A#", 10),
-	B("B", 11);
+public enum MozartStep {
+	HALF("H", 1),
+	WHOLE("W", 2);
 
 	private String string;
 	private int value;
 
-	private MozartNote(String note, int value) throws MozartRuntimeException {
+	private MozartStep(String note, int value) throws MozartRuntimeException {
 		try {
 			this.setString(note);
 			this.setValue(value);
@@ -54,7 +39,7 @@ public enum MozartNote {
 	
 	private void setValue(int value) throws MozartRuntimeException {
 		try {
-			if (value < 0 | value > 11) {
+			if (value < 0 | value > 2) {
 				throw new MozartRuntimeException(this.getClass().getName() + ": value out of range.");
 			}
 			this.value = value;
