@@ -3,7 +3,7 @@ import org.codehamster.*;
 public class MozartMain {
 	public static void main(String[] args) {
 		for (MozartOctaveType o : MozartOctaveType.values()) {
-			for (MozartNoteType n : MozartNoteType.values()) {
+			for (MozartPitchType n : MozartPitchType.values()) {
 				System.out.println(new MozartNote(n, o));
 			}
 		}

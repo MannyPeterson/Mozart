@@ -1,12 +1,6 @@
 package org.codehamster;
 
-/*
- * 
- * Rename this class as MozartPitchType
- * 
- */
-
-public enum MozartNoteType {
+public enum MozartPitchType {
 	C("C", 0),
 	C_SHARP_D_FLAT("C#/Db", 1),
 	D("D", 2),
@@ -23,7 +17,7 @@ public enum MozartNoteType {
 	private String string;
 	private int value;
 
-	private MozartNoteType(String string, int value) throws MozartRuntimeException {
+	private MozartPitchType(String string, int value) throws MozartRuntimeException {
 		try {
 			this.setString(string);
 			this.setValue(value);

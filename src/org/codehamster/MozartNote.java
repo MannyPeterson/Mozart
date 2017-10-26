@@ -2,13 +2,13 @@ package org.codehamster;
 
 public class MozartNote {
 	private MozartLengthType length;
-	private MozartNoteType note;
+	private MozartPitchType pitch;
 	private MozartOctaveType octave;
 	private boolean rest;
 
-	public MozartNote(MozartNoteType note, MozartOctaveType octave) throws MozartRuntimeException {
+	public MozartNote(MozartPitchType pitch, MozartOctaveType octave) throws MozartRuntimeException {
 		try {
-			this.setNote(note);
+			this.setNote(pitch);
 			this.setOctave(octave);
 			// this.setLength(length); never set length in this constructor.
 			this.setRest(false);
@@ -18,10 +18,10 @@ public class MozartNote {
 		}
 	}
 
-	public MozartNote(MozartNoteType note, MozartOctaveType octave, MozartLengthType length)
+	public MozartNote(MozartPitchType pitch, MozartOctaveType octave, MozartLengthType length)
 			throws MozartRuntimeException {
 		try {
-			this.setNote(note);
+			this.setNote(pitch);
 			this.setOctave(octave);
 			this.setLength(length);
 			this.setRest(false);
@@ -31,10 +31,10 @@ public class MozartNote {
 		}
 	}
 
-	public MozartNote(MozartNoteType note, MozartOctaveType octave, MozartLengthType length, boolean rest)
+	public MozartNote(MozartPitchType pitch, MozartOctaveType octave, MozartLengthType length, boolean rest)
 			throws MozartRuntimeException {
 		try {
-			this.setNote(note);
+			this.setNote(pitch);
 			this.setOctave(octave);
 			this.setLength(length);
 			this.setRest(rest);
@@ -51,7 +51,7 @@ public class MozartNote {
 	public int getMIDI() throws MozartRuntimeException {
 		try {
 			int retVal;
-			retVal = (this.octave.getValue() * 12) + this.note.getValue();
+			retVal = (this.octave.getValue() * 12) + this.pitch.getValue();
 			if (retVal < 0 | retVal > 127) {
 				retVal = 0;
 			}
@@ -61,8 +61,8 @@ public class MozartNote {
 		}
 	}
 
-	public MozartNoteType getNote() {
-		return this.note;
+	public MozartPitchType getPitch() {
+		return this.pitch;
 	}
 
 	public MozartOctaveType getOctave() {
@@ -85,12 +85,12 @@ public class MozartNote {
 		}
 	}
 
-	private void setNote(MozartNoteType note) throws MozartRuntimeException {
+	private void setNote(MozartPitchType pitch) throws MozartRuntimeException {
 		try {
-			if (note == null) {
+			if (pitch == null) {
 				throw new MozartRuntimeException(this.getClass().getName() + ": note is null.");
 			}
-			this.note = note;
+			this.pitch = pitch;
 			return;
 		} catch (MozartRuntimeException e) {
 			throw new MozartRuntimeException(e);
@@ -121,7 +121,7 @@ public class MozartNote {
 				retVal.append(this.getLength().toString());
 				retVal.append(" REST");
 			} else {
-				retVal.append(this.getNote().toString());
+				retVal.append(this.getPitch().toString());
 				retVal.append(" ");
 				retVal.append(this.getOctave().toString());
 				if (this.getLength() != null) {
