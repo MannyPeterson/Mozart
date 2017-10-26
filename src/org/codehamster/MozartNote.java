@@ -79,6 +79,7 @@ public class MozartNote {
 				throw new MozartRuntimeException(this.getClass().getName() + ": length is null.");
 			}
 			this.length = length;
+			return;
 		} catch (MozartRuntimeException e) {
 			throw new MozartRuntimeException(e);
 		}
@@ -90,6 +91,7 @@ public class MozartNote {
 				throw new MozartRuntimeException(this.getClass().getName() + ": note is null.");
 			}
 			this.note = note;
+			return;
 		} catch (MozartRuntimeException e) {
 			throw new MozartRuntimeException(e);
 		}
@@ -101,6 +103,7 @@ public class MozartNote {
 				throw new MozartRuntimeException(this.getClass().getName() + ": octave is null.");
 			}
 			this.octave = octave;
+			return;
 		} catch (MozartRuntimeException e) {
 			throw new MozartRuntimeException(e);
 
