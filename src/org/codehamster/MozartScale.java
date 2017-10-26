@@ -1,8 +1,8 @@
 package org.codehamster;
 
 public enum MozartScale {
-	MAJOR("MAJOR",0),
-	MINOR("MINOR",1);
+	MAJOR("MAJOR", 0),
+	MINOR("MINOR", 1);
 	
 	private String string;
 	private int value;
