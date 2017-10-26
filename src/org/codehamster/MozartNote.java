@@ -4,12 +4,40 @@ public class MozartNote {
 	private MozartLengthType length;
 	private MozartNoteType note;
 	private MozartOctaveType octave;
+	private boolean rest;
 
-	public MozartNote(MozartNoteType note, MozartOctaveType octave, MozartLengthType length) {
+	public MozartNote(MozartNoteType note, MozartOctaveType octave) throws MozartRuntimeException {
+		try {
+			this.setNote(note);
+			this.setOctave(octave);
+			// this.setLength(null); never set length in this constructor.
+			this.setRest(false);
+			return;
+		} catch (MozartRuntimeException e) {
+			throw new MozartRuntimeException(e);
+		}
+	}
+
+	public MozartNote(MozartNoteType note, MozartOctaveType octave, MozartLengthType length)
+			throws MozartRuntimeException {
 		try {
 			this.setNote(note);
 			this.setOctave(octave);
 			this.setLength(length);
+			this.setRest(false);
+			return;
+		} catch (MozartRuntimeException e) {
+			throw new MozartRuntimeException(e);
+		}
+	}
+
+	public MozartNote(MozartNoteType note, MozartOctaveType octave, MozartLengthType length, boolean rest)
+			throws MozartRuntimeException {
+		try {
+			this.setNote(note);
+			this.setOctave(octave);
+			this.setLength(length);
+			this.setRest(rest);
 			return;
 		} catch (MozartRuntimeException e) {
 			throw new MozartRuntimeException(e);
@@ -20,12 +48,20 @@ public class MozartNote {
 		return this.length;
 	}
 
+	public int getMIDI() {
+		return (this.octave.getValue() * 12) + this.note.getValue();
+	}
+
 	public MozartNoteType getNote() {
 		return this.note;
 	}
 
 	public MozartOctaveType getOctave() {
 		return this.octave;
+	}
+
+	public boolean isRest() {
+		return this.rest;
 	}
 
 	private void setLength(MozartLengthType length) throws MozartRuntimeException {
@@ -62,13 +98,24 @@ public class MozartNote {
 		}
 	}
 
+	private void setRest(boolean rest) {
+		this.rest = rest;
+	}
+
 	public String toString() {
 		StringBuilder retVal = new StringBuilder();
-		retVal.append(this.getOctave().toString());
-		retVal.append(" ");
-		retVal.append(this.getNote().toString());
-		retVal.append(" ");
-		retVal.append(this.getLength().toString());
+		if (this.isRest()) {
+			retVal.append(this.getLength().toString());
+			retVal.append(" REST");
+		} else {
+			retVal.append(this.getNote().toString());
+			retVal.append(" ");
+			retVal.append(this.getOctave().toString());
+			if (this.getLength() != null) {
+				retVal.append(" ");
+				retVal.append(this.getLength().toString());
+			}
+		}
 		return retVal.toString();
 	}
 }

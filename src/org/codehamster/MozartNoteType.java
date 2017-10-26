@@ -1,23 +1,17 @@
 package org.codehamster;
 
 public enum MozartNoteType {
-	REST("REST", -1),
 	C("C", 0),
-	C_SHARP("C#", 1),
-	D_FLAT("Db", 1),
+	C_SHARP_D_FLAT("C#/Db", 1),
 	D("D", 2),
-	D_SHARP("D#", 3),	
-	E_FLAT("Eb", 3),
+	D_SHARP_E_FLAT("D#/Eb", 3),	
 	E("E", 4),
 	F("F", 5),
-	F_SHARP("F#", 6),
-	G_FLAT("Gb", 6),
+	F_SHARP_G_FLAT("F#/Gb", 6),
 	G("G", 7),
-	G_SHARP("G#", 8),
-	A_FLAT("Ab", 8),
+	G_SHARP_A_FLAT("G#/Ab", 8),
 	A("A", 9),
-	B_FLAT("Bb", 10),
-	A_SHARP("A#", 10),
+	A_SHARP_B_FLAT("A#/Bb", 10),
 	B("B", 11);
 
 	private String string;
@@ -55,7 +49,7 @@ public enum MozartNoteType {
 	
 	private void setValue(int value) throws MozartRuntimeException {
 		try {
-			if (value < -1 | value > 11) {
+			if (value < 0 | value > 11) {
 				throw new MozartRuntimeException(this.getClass().getName() + ": value out of range.");
 			}
 			this.value = value;
