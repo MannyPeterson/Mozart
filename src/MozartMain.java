@@ -2,15 +2,12 @@ import org.codehamster.*;
 
 public class MozartMain {
 	public static void main(String[] args) {
-
-		int i = 0;
 		MozartNote note;
 
 		for (MozartOctaveType o : MozartOctaveType.values()) {
 			for (MozartNoteType n : MozartNoteType.values()) {
 				note = new MozartNote(n, o);
-				System.out.print(i++);
-				System.out.println(" " + note);
+				System.out.println(note.getMIDI() + " " + note);
 			}
 		}
 
