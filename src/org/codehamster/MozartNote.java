@@ -10,7 +10,7 @@ public class MozartNote {
 		try {
 			this.setNote(note);
 			this.setOctave(octave);
-			// this.setLength(null); never set length in this constructor.
+			// this.setLength(length); never set length in this constructor.
 			this.setRest(false);
 			return;
 		} catch (MozartRuntimeException e) {
