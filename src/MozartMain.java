@@ -2,12 +2,9 @@ import org.codehamster.*;
 
 public class MozartMain {
 	public static void main(String[] args) {
-		MozartNote note;
-
 		for (MozartOctaveType o : MozartOctaveType.values()) {
 			for (MozartNoteType n : MozartNoteType.values()) {
-				note = new MozartNote(n, o);
-				System.out.println(note.getMIDI() + " " + note);
+				System.out.println(new MozartNote(n, o));
 			}
 		}
 
