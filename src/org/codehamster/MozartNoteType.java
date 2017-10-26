@@ -1,7 +1,7 @@
 package org.codehamster;
 
 public enum MozartNoteType {
-	NORMAL("NORMAL", 0),
+	PITCH("PITCH", 0),
 	REST("REST", 1);
 
 	private String string;
