@@ -1,13 +1,13 @@
 package org.codehamster;
 
-public enum MozartStepType {
-	HALF("HALF", 1),
-	WHOLE("WHOLE", 2);
+public enum MozartNoteType {
+	NORMAL("NORMAL", 0),
+	REST("REST", 1);
 
 	private String string;
 	private int value;
 
-	private MozartStepType(String string, int value) throws MozartRuntimeException {
+	private MozartNoteType(String string, int value) throws MozartRuntimeException {
 		try {
 			this.setString(string);
 			this.setValue(value);
@@ -39,7 +39,7 @@ public enum MozartStepType {
 	
 	private void setValue(int value) throws MozartRuntimeException {
 		try {
-			if (value < 1 | value > 2) {
+			if (value < 0 | value > 1) {
 				throw new MozartRuntimeException(this.getClass().getName() + ": value out of range.");
 			}
 			this.value = value;

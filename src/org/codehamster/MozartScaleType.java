@@ -25,12 +25,12 @@ public enum MozartScaleType {
 		return this.value;
 	}
 
-	private void setString(String note) throws MozartRuntimeException {
+	private void setString(String string) throws MozartRuntimeException {
 		try {
-			if (note == null) {
+			if (string == null) {
 				throw new MozartRuntimeException(this.getClass().getName() + ": string is null.");
 			}
-			this.string = note;
+			this.string = string;
 			return;
 		} catch (MozartRuntimeException e) {
 			throw new MozartRuntimeException(e);
