@@ -1,5 +1,11 @@
 package org.codehamster;
 
+/*
+ * 
+ * Rename this class as MozartPitchType
+ * 
+ */
+
 public enum MozartNoteType {
 	C("C", 0),
 	C_SHARP_D_FLAT("C#/Db", 1),
