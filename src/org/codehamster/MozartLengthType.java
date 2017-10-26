@@ -42,7 +42,7 @@ public enum MozartLengthType {
 	
 	private void setValue(int value) throws MozartRuntimeException {
 		try {
-			if (value < 0 | value > 2) {
+			if (value < 2 | value > 32) {
 				throw new MozartRuntimeException(this.getClass().getName() + ": value out of range.");
 			}
 			this.value = value;

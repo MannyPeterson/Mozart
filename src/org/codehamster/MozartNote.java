@@ -31,7 +31,7 @@ public class MozartNote {
 	private void setLength(MozartLengthType length) throws MozartRuntimeException {
 		try {
 			if (length == null) {
-				throw new MozartRuntimeException();
+				throw new MozartRuntimeException(this.getClass().getName() + ": length is null.");
 			}
 			this.length = length;
 		} catch (MozartRuntimeException e) {
@@ -42,7 +42,7 @@ public class MozartNote {
 	private void setNote(MozartNoteType note) throws MozartRuntimeException {
 		try {
 			if (note == null) {
-				throw new MozartRuntimeException();
+				throw new MozartRuntimeException(this.getClass().getName() + ": note is null.");
 			}
 			this.note = note;
 		} catch (MozartRuntimeException e) {
@@ -53,7 +53,7 @@ public class MozartNote {
 	private void setOctave(MozartOctaveType octave) throws MozartRuntimeException {
 		try {
 			if (octave == null) {
-				throw new MozartRuntimeException();
+				throw new MozartRuntimeException(this.getClass().getName() + ": octave is null.");
 			}
 			this.octave = octave;
 		} catch (MozartRuntimeException e) {

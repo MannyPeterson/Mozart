@@ -39,7 +39,7 @@ public enum MozartScaleType {
 	
 	private void setValue(int value) throws MozartRuntimeException {
 		try {
-			if (value < 0 | value > 2) {
+			if (value < 0 | value > 1) {
 				throw new MozartRuntimeException(this.getClass().getName() + ": value out of range.");
 			}
 			this.value = value;
