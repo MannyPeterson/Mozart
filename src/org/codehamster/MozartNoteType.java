@@ -1,6 +1,6 @@
 package org.codehamster;
 
-public enum MozartNote {
+public enum MozartNoteType {
 	C("C", 0),
 	C_SHARP("C#", 1),
 	D_FLAT("Db", 1),
@@ -22,7 +22,7 @@ public enum MozartNote {
 	private String string;
 	private int value;
 
-	private MozartNote(String string, int value) throws MozartRuntimeException {
+	private MozartNoteType(String string, int value) throws MozartRuntimeException {
 		try {
 			this.setString(string);
 			this.setValue(value);

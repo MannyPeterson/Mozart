@@ -1,15 +1,15 @@
 package org.codehamster;
 
-public enum MozartStep {
-	HALF("HALF", 1),
-	WHOLE("WHOLE", 2);
-
+public enum MozartScaleType {
+	MAJOR("MAJOR", 0),
+	MINOR("MINOR", 1);
+	
 	private String string;
 	private int value;
 
-	private MozartStep(String string, int value) throws MozartRuntimeException {
+	private MozartScaleType(String note, int value) throws MozartRuntimeException {
 		try {
-			this.setString(string);
+			this.setString(note);
 			this.setValue(value);
 			return;
 		} catch (MozartRuntimeException e) {
