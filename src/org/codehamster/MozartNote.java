@@ -58,6 +58,17 @@ public class MozartNote {
 			this.octave = octave;
 		} catch (MozartRuntimeException e) {
 			throw new MozartRuntimeException(e);
+
 		}
+	}
+
+	public String toString() {
+		StringBuilder retVal = new StringBuilder();
+		retVal.append(this.getOctave().toString());
+		retVal.append(" ");
+		retVal.append(this.getNote().toString());
+		retVal.append(" ");
+		retVal.append(this.getLength().toString());
+		return retVal.toString();
 	}
 }
