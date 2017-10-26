@@ -48,8 +48,17 @@ public class MozartNote {
 		return this.length;
 	}
 
-	public int getMIDI() {
-		return (this.octave.getValue() * 12) + this.note.getValue();
+	public int getMIDI() throws MozartRuntimeException {
+		try {
+			int retVal;
+			retVal = (this.octave.getValue() * 12) + this.note.getValue();
+			if (retVal < 0 | retVal > 127) {
+				retVal = 0;
+			}
+			return retVal;
+		} catch (MozartRuntimeException e) {
+			throw new MozartRuntimeException(e);
+		}
 	}
 
 	public MozartNoteType getNote() {
@@ -102,20 +111,24 @@ public class MozartNote {
 		this.rest = rest;
 	}
 
-	public String toString() {
-		StringBuilder retVal = new StringBuilder();
-		if (this.isRest()) {
-			retVal.append(this.getLength().toString());
-			retVal.append(" REST");
-		} else {
-			retVal.append(this.getNote().toString());
-			retVal.append(" ");
-			retVal.append(this.getOctave().toString());
-			if (this.getLength() != null) {
-				retVal.append(" ");
+	public String toString() throws MozartRuntimeException {
+		try {
+			StringBuilder retVal = new StringBuilder();
+			if (this.isRest()) {
 				retVal.append(this.getLength().toString());
+				retVal.append(" REST");
+			} else {
+				retVal.append(this.getNote().toString());
+				retVal.append(" ");
+				retVal.append(this.getOctave().toString());
+				if (this.getLength() != null) {
+					retVal.append(" ");
+					retVal.append(this.getLength().toString());
+				}
 			}
+			return retVal.toString();
+		} catch (MozartRuntimeException e) {
+			throw new MozartRuntimeException(e);
 		}
-		return retVal.toString();
 	}
 }
