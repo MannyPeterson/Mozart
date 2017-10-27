@@ -27,12 +27,21 @@ public class MozartScale {
 		try {
 			allNotes = new ArrayList<MozartNote>();
 			firstNote = true;
+			int i = 0;
+			int j = 0;
 			for (MozartOctaveType octave : MozartOctaveType.values()) {
 				for (MozartPitchType pitch : MozartPitchType.values()) {
-					if(firstNote & pitch == this.getKey()) {
+					if (firstNote & pitch == this.getKey()) {
+						allNotes.add(new MozartNote(MozartNoteType.PITCH, pitch, octave, MozartLengthType.QUARTER));
+						j = this.step[this.getScale().getValue()][i].getValue();
+						i = (i + 1) % this.step[this.getScale().getValue()].length;
 						firstNote = false;
+					} else if (!firstNote & j == 0) {
+						allNotes.add(new MozartNote(MozartNoteType.PITCH, pitch, octave, MozartLengthType.QUARTER));
+						j = this.step[this.getScale().getValue()][i].getValue();
+					} else if (!firstNote & j > 0) {
+						j -= 1;
 					}
-					allNotes.add(new MozartNote(MozartNoteType.PITCH, pitch, octave, MozartLengthType.QUARTER));
 				}
 			}
 		} catch (MozartRuntimeException e) {
