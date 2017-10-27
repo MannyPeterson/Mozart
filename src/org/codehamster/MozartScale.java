@@ -23,22 +23,17 @@ public class MozartScale {
 
 	private void create() throws MozartRuntimeException {
 		ArrayList<MozartNote> allNotes;
+		boolean firstNote;
 		try {
 			allNotes = new ArrayList<MozartNote>();
+			firstNote = true;
 			for (MozartOctaveType octave : MozartOctaveType.values()) {
 				for (MozartPitchType pitch : MozartPitchType.values()) {
+					if(firstNote & pitch == this.getKey()) {
+						firstNote = false;
+					}
 					allNotes.add(new MozartNote(MozartNoteType.PITCH, pitch, octave, MozartLengthType.QUARTER));
 				}
-			}
-			for (int i = 0; i < allNotes.size(); i++) {
-				if (allNotes.get(i).getPitch() == this.getKey()) {
-					break;
-				} else {
-					allNotes.remove(i);
-				}
-			}
-			for (int i = 0; i < allNotes.size(); i++) {
-				
 			}
 		} catch (MozartRuntimeException e) {
 			throw new MozartRuntimeException(e);
