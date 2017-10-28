@@ -4,15 +4,17 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class MozartPhrase {
+	private int length;
 	private MozartOctaveType octave;
 	private int[][] pattern = { { 1, 2, 3, 4, 5 }, { -1, -2, -3, -4, -5 }, { 0, 0, 0, 0, 0 } };
 	private MozartNote[] phrase;
 	private MozartScale scale;
 
-	public MozartPhrase(MozartScale scale, MozartOctaveType octave) throws MozartRuntimeException {
+	public MozartPhrase(MozartScale scale, MozartOctaveType octave, int length) throws MozartRuntimeException {
 		try {
 			this.setScale(scale);
 			this.setOctave(octave);
+			this.setLength(length);
 			this.create();
 			return;
 		} catch (MozartRuntimeException e) {
@@ -40,7 +42,7 @@ public class MozartPhrase {
 				}
 				scaleIndex += 1;
 			}
-			for (int i = 0; i < 100; i++) {
+			for (int i = 0; i < this.getLength(); i++) {
 				patternsIndex = random.nextInt(this.getPattern().length);
 				for (patternIndex = 0; patternIndex < this.getPattern()[patternsIndex].length; patternIndex++) {
 					phrase.add(
@@ -53,6 +55,10 @@ public class MozartPhrase {
 		} catch (MozartRuntimeException e) {
 			throw new MozartRuntimeException(e);
 		}
+	}
+
+	public int getLength() {
+		return this.length;
 	}
 
 	public MozartOctaveType getOctave() {
@@ -69,6 +75,19 @@ public class MozartPhrase {
 
 	public MozartScale getScale() {
 		return this.scale;
+	}
+
+	private void setLength(int length) throws MozartRuntimeException {
+		try {
+			if (length < 1) {
+				throw new MozartRuntimeException(this.getClass().getName() + ": length is zero or less.");
+			}
+			this.length = length;
+			return;
+		} catch (MozartRuntimeException e) {
+			throw new MozartRuntimeException(e);
+
+		}
 	}
 
 	private void setOctave(MozartOctaveType octave) throws MozartRuntimeException {
