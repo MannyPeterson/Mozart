@@ -1,3 +1,4 @@
+package org.codehamster;
 import org.codehamster.*;
 
 public class MozartMain {
