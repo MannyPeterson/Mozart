@@ -3,20 +3,21 @@ package org.codehamster;
 import java.util.ArrayList;
 
 public class MozartScale {
-	MozartPitchType root;
-	MozartNote[] scale;
-	MozartStepType[][] step = {
+	private MozartPitchType root;
+	private MozartNote[] scale;
+	private MozartStepType[][] step = {
 			{ MozartStepType.WHOLE, MozartStepType.WHOLE, MozartStepType.HALF, MozartStepType.WHOLE,
 					MozartStepType.WHOLE, MozartStepType.WHOLE, MozartStepType.HALF },
 			{ MozartStepType.WHOLE, MozartStepType.HALF, MozartStepType.WHOLE, MozartStepType.WHOLE,
 					MozartStepType.HALF, MozartStepType.WHOLE, MozartStepType.WHOLE } };
-	MozartScaleType type;
+	private MozartScaleType type;
 
 	public MozartScale(MozartScaleType type, MozartPitchType root) throws MozartRuntimeException {
 		try {
 			this.setType(type);
 			this.setRoot(root);
 			this.create();
+			return;
 		} catch (MozartRuntimeException e) {
 			throw new MozartRuntimeException(e);
 		}
