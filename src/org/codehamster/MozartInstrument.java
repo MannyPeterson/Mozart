@@ -63,40 +63,29 @@ public class MozartInstrument {
 		}
 	}
 
-	public void play(MozartPhrase phrase) throws MozartRuntimeException {
-		int i;
-		try {
-			if (phrase == null) {
-				throw new MozartRuntimeException(this.getClass().getName() + ": phrase is null.");
+	public void play(MozartPhrase phrase) throws InvalidMidiDataException, InterruptedException  { /* Bypassing getters and/or setters for performance */
+		int length;
+		for (MozartNote phraseNote : phrase.getPhrase()) {
+			for (MozartInstrumentNote instNote : this.notes) {
+				instNote.play(phraseNote);
 			}
-			for (MozartNote phraseNote : phrase.getPhrase()) {
-				for (MozartInstrumentNote instNote : this.getNotes()) {
-					instNote.play(phraseNote);
-				}
-				for (i = 0; i < phraseNote.getLength().getValue(); i++) {
-					for (MozartInstrumentNote instNote : this.getNotes()) {
-						if (instNote.stateChanged()) {
-							if (instNote.isOn()) {
-								this.midiReceiver.send(
-										new ShortMessage(ShortMessage.NOTE_ON, 0, instNote.getMIDINote(), 127), -1);
-							} else {
-								this.midiReceiver.send(
-										new ShortMessage(ShortMessage.NOTE_OFF, 0, instNote.getMIDINote(), 127), -1);
-							}
+			for (length = 0; length < phraseNote.getLength().getValue(); length++) {
+				for (MozartInstrumentNote instNote : this.notes) {
+					if (instNote.stateChanged()) {
+						if (instNote.isOn()) {
+							this.midiReceiver
+									.send(new ShortMessage(ShortMessage.NOTE_ON, 0, instNote.getMIDINote(), 127), -1);
+						} else {
+							this.midiReceiver
+									.send(new ShortMessage(ShortMessage.NOTE_OFF, 0, instNote.getMIDINote(), 127), -1);
 						}
-						instNote.tick();
 					}
-					Thread.sleep(25);
+					instNote.tick();
 				}
+				Thread.sleep(25);
 			}
-			return;
-		} catch (MozartRuntimeException e) {
-			throw new MozartRuntimeException(e);
-		} catch (InterruptedException e) {
-			throw new MozartRuntimeException(e);
-		} catch (InvalidMidiDataException e) {
-			throw new MozartRuntimeException(e);
 		}
+		return;
 	}
 
 	private void setNotes(MozartInstrumentNote[] notes) throws MozartRuntimeException {

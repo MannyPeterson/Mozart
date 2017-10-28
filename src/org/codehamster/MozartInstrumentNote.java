@@ -21,36 +21,19 @@ public class MozartInstrumentNote {
 		return this.MIDINote;
 	}
 
-	private int getTicks() {
-		return this.ticks;
-	}
-
-	private int getTTL() {
-		return this.TTL;
-	}
-
-	public boolean isOn() {
-		if (this.getTicks() > 0) {
+	public boolean isOn() { /* Bypassing getters and/or setters for performance */
+		if (this.ticks > 0) {
 			return true;
 		}
 		return false;
 	}
 
-	public void play(MozartNote note) throws MozartRuntimeException {
-		try {
-			if (note == null) {
-				throw new MozartRuntimeException(this.getClass().getName() + ": note is null.");
-			}
-			if (note.getNote() == MozartNoteType.PITCH) {
-				if (this.getMIDINote() == ((note.getOctave().getValue() * 12) + note.getPitch().getValue())) {
-					this.setStateChange(true);
-					this.setTicks(this.getTTL());
-				}
-			}
-			return;
-		} catch (MozartRuntimeException e) {
-			throw new MozartRuntimeException(e);
+	public void play(MozartNote note) { /* Bypassing getters and/or setters for performance */
+		if (this.MIDINote == ((note.getOctave().getValue() * 12) + note.getPitch().getValue())) {
+			this.stateChange = true;
+			this.ticks = this.TTL;
 		}
+		return;
 	}
 
 	private void setMIDINote(MozartNote note) throws MozartRuntimeException {
@@ -70,18 +53,6 @@ public class MozartInstrumentNote {
 		return;
 	}
 
-	private void setTicks(int ticks) throws MozartRuntimeException {
-		try {
-			if (ticks < 0) {
-				throw new MozartRuntimeException(this.getClass().getName() + ": ticks is less than zero.");
-			}
-			this.ticks = ticks;
-			return;
-		} catch (MozartRuntimeException e) {
-			throw new MozartRuntimeException(e);
-		}
-	}
-
 	private void setTTL(int TTL) {
 		try {
 			if (ticks < 0) {
@@ -94,19 +65,19 @@ public class MozartInstrumentNote {
 		}
 	}
 
-	public boolean stateChanged() {
+	public boolean stateChanged() { /* Bypassing getters and/or setters for performance */
 		if (this.stateChange) {
-			this.setStateChange(false);
+			this.stateChange = false;
 			return true;
 		}
 		return false;
 	}
 
-	public void tick() {
-		if (this.getTicks() > 0) {
-			this.setTicks(this.getTicks() - 1);
-			if (this.getTicks() == 0) {
-				this.setStateChange(true);
+	public void tick() { /* Bypassing getters and/or setters for performance */
+		if (this.ticks > 0) {
+			this.ticks -= 1;
+			if (this.ticks == 0) {
+				this.stateChange = true;
 			}
 		}
 		return;
