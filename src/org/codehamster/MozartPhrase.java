@@ -33,8 +33,8 @@ public class MozartPhrase {
 			patternsIndex = 0;
 			patternIndex = 0;
 			phrase = new ArrayList<MozartNote>();
-			for (MozartNote note : this.getScale().getScale()) {
-				if (note.getPitch() == this.getScale().getRoot() & note.getOctave() == this.getOctave()) {
+			for (MozartNote scaleNote : this.getScale().getScale()) {
+				if (scaleNote.getPitch() == this.getScale().getRoot() & scaleNote.getOctave() == this.getOctave()) {
 					rootNoteIndex = scaleIndex;
 					break;
 				}
