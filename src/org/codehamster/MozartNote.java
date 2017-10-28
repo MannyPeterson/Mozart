@@ -23,7 +23,7 @@ public class MozartNote {
 		return this.length;
 	}
 
-	public int getMIDI() throws MozartRuntimeException {
+	public int getMIDINote() throws MozartRuntimeException {
 		try {
 			int retVal;
 			retVal = (this.octave.getValue() * 12) + this.pitch.getValue();

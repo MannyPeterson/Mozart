@@ -7,7 +7,8 @@ import javax.sound.midi.Synthesizer;
 
 public class MozartMain {
 	public static void main(String[] args) {
-
+		System.out.println("Mozart Digital Composer v0.1 (C)Copyright 2017 Manny Peterson All Rights Reserved");
+		
 		MozartScale scale = new MozartScale(MozartScaleType.MAJOR, MozartPitchType.C);
 
 		MozartPhrase phrase = new MozartPhrase(scale, MozartOctaveType.SIXTH, 100);
@@ -24,11 +25,11 @@ public class MozartMain {
 			Thread.sleep(5000);
 			for (i = 0; i < phrase.getLength(); i++) {
 				System.out.println(phrase.getPhrase()[i]);
-				channel.noteOn(phrase.getPhrase()[i].getMIDI(), 127);
+				channel.noteOn(phrase.getPhrase()[i].getMIDINote(), 127);
 				for (j = 0; j < phrase.getPhrase()[i].getLength().getValue(); j++) {
 					Thread.sleep(25);
 				}
-				channel.noteOff(phrase.getPhrase()[i].getMIDI());
+				channel.noteOff(phrase.getPhrase()[i].getMIDINote());
 			}
 		} catch (MidiUnavailableException e) {
 			e.printStackTrace();
