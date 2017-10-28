@@ -29,6 +29,13 @@ public class MozartInstrumentNote {
 		return this.TTL;
 	}
 
+	public boolean isOn() {
+		if (this.getTicks() > 0) {
+			return true;
+		}
+		return false;
+	}
+
 	public void play(MozartNote note) throws MozartRuntimeException {
 		try {
 			if (note == null) {

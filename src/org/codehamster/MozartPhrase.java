@@ -47,6 +47,7 @@ public class MozartPhrase {
 				for (patternIndex = 0; patternIndex < this.getPattern()[patternsIndex].length; patternIndex++) {
 					phrase.add(
 							this.getScale().getScale()[rootNoteIndex + this.getPattern()[patternsIndex][patternIndex]]);
+					i += 1;
 				}
 			}
 			this.setPhrase(new MozartNote[phrase.size()]);
