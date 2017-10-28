@@ -2,7 +2,7 @@ import java.util.Arrays;
 
 import org.codehamster.MozartRuntimeException;
 
-public class MozartScale {
+public class MozartScaleOld {
 	
 	public final static String[] keys = { "C", "C#/Db", "D", "D#/Eb", "E", "F", "F#/Gb", "G", "G#/Ab", "A", "A#/Bb",
 			"B" };
@@ -13,7 +13,7 @@ public class MozartScale {
 	private int[] scale;
 	private int type;
 
-	public MozartScale(String key, int type) throws MozartRuntimeException {
+	public MozartScaleOld(String key, int type) throws MozartRuntimeException {
 		try {
 			this.setKey(key);
 			this.setType(type);
@@ -34,8 +34,8 @@ public class MozartScale {
 			note = this.getKey();
 			do {
 				scaleTemp[scaleTempIndex] = note;
-				note = note + MozartScale.scaleInterval[this.getType()][scaleIntervalIndex];
-				scaleIntervalIndex = (scaleIntervalIndex + 1) % MozartScale.scaleInterval[this.getType()].length;
+				note = note + MozartScaleOld.scaleInterval[this.getType()][scaleIntervalIndex];
+				scaleIntervalIndex = (scaleIntervalIndex + 1) % MozartScaleOld.scaleInterval[this.getType()].length;
 				scaleTempIndex += 1;
 			} while (note < 128);
 			this.setScale(Arrays.copyOf(scaleTemp, scaleTempIndex)); 
@@ -64,8 +64,8 @@ public class MozartScale {
 			if (key == null) {
 				throw new MozartRuntimeException(this.getClass().getName() + ": key is null.");
 			}
-			for (i = 0; i < MozartScale.keys.length; i++) {
-				if (MozartScale.keys[i].equals(key)) {
+			for (i = 0; i < MozartScaleOld.keys.length; i++) {
+				if (MozartScaleOld.keys[i].equals(key)) {
 					foundKey = true;
 					break;
 				}
@@ -94,7 +94,7 @@ public class MozartScale {
 
 	private void setType(int type) throws MozartRuntimeException {
 		try {
-			if (type < MozartScale.SCALE_MAJOR | type > MozartScale.SCALE_MINOR) {
+			if (type < MozartScaleOld.SCALE_MAJOR | type > MozartScaleOld.SCALE_MINOR) {
 				throw new MozartRuntimeException(this.getClass().getName() + ": invalid scale type.");
 			}
 			this.type = type;

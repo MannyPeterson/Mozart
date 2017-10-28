@@ -3,14 +3,9 @@ import org.codehamster.*;
 public class MozartMain {
 	public static void main(String[] args) {
 
-		MozartNoteType t = MozartNoteType.PITCH;
-		MozartLengthType l = MozartLengthType.QUARTER;
 
-		for (MozartOctaveType o : MozartOctaveType.values()) {
-			for (MozartPitchType p : MozartPitchType.values()) {
-				System.out.println(new MozartNote(t, p, o, l));
-			}
-		}
+		MozartScale scale = new MozartScale(MozartScaleType.MINOR, MozartPitchType.C);
+		
 
 		/*
 		 * MozartScale mozartScale; MozartPhrase mozartPhrase; MozartNotes[] phrase;

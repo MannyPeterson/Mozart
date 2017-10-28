@@ -3,18 +3,19 @@ package org.codehamster;
 import java.util.ArrayList;
 
 public class MozartScale {
-	MozartPitchType key;
-	MozartScaleType scale;
+	MozartPitchType root;
+	MozartNoteType[] scale;
 	MozartStepType[][] step = {
 			{ MozartStepType.WHOLE, MozartStepType.WHOLE, MozartStepType.HALF, MozartStepType.WHOLE,
 					MozartStepType.WHOLE, MozartStepType.WHOLE, MozartStepType.HALF },
 			{ MozartStepType.WHOLE, MozartStepType.HALF, MozartStepType.WHOLE, MozartStepType.WHOLE,
 					MozartStepType.HALF, MozartStepType.WHOLE, MozartStepType.WHOLE } };
+	MozartScaleType type;
 
-	public MozartScale(MozartScaleType scale, MozartPitchType key) throws MozartRuntimeException {
+	public MozartScale(MozartScaleType type, MozartPitchType root) throws MozartRuntimeException {
 		try {
-			this.setScale(scale);
-			this.setKey(key);
+			this.setType(type);
+			this.setRoot(root);
 			this.create();
 		} catch (MozartRuntimeException e) {
 			throw new MozartRuntimeException(e);
@@ -22,59 +23,72 @@ public class MozartScale {
 	}
 
 	private void create() throws MozartRuntimeException {
-		ArrayList<MozartNote> allNotes;
-		boolean firstNote;
+		ArrayList<MozartNote> scale;
+		boolean foundRootNote;
+		int stepIndex;
+		int stepsRemaining;
 		try {
-			allNotes = new ArrayList<MozartNote>();
-			firstNote = true;
-			int i = 0;
-			int j = 0;
+			scale = new ArrayList<MozartNote>();
+			foundRootNote = false;
+			stepIndex = 0;
+			stepsRemaining = 0;
 			for (MozartOctaveType octave : MozartOctaveType.values()) {
 				for (MozartPitchType pitch : MozartPitchType.values()) {
-					if (firstNote & pitch == this.getKey()) {
-						allNotes.add(new MozartNote(MozartNoteType.PITCH, pitch, octave, MozartLengthType.QUARTER));
-						j = this.step[this.getScale().getValue()][i].getValue();
-						i = (i + 1) % this.step[this.getScale().getValue()].length;
-						firstNote = false;
-					} else if (!firstNote & j == 0) {
-						allNotes.add(new MozartNote(MozartNoteType.PITCH, pitch, octave, MozartLengthType.QUARTER));
-						j = this.step[this.getScale().getValue()][i].getValue();
-					} else if (!firstNote & j > 0) {
-						j -= 1;
+					if (!foundRootNote & pitch == this.getRoot()) {
+						scale.add(new MozartNote(MozartNoteType.PITCH, pitch, octave, MozartLengthType.QUARTER));
+						stepsRemaining = this.getStep()[this.getType().getValue()][stepIndex].getValue() - 1;
+						stepIndex = (stepIndex + 1) % this.step[this.getType().getValue()].length;
+						foundRootNote = true;
+					} else if (foundRootNote & stepsRemaining == 0) {
+						scale.add(new MozartNote(MozartNoteType.PITCH, pitch, octave, MozartLengthType.QUARTER));
+						stepsRemaining = this.getStep()[this.getType().getValue()][stepIndex].getValue() - 1;
+						stepIndex = (stepIndex + 1) % this.step[this.getType().getValue()].length;
+					} else if (foundRootNote & stepsRemaining > 0) {
+						stepsRemaining -= 1;
 					}
 				}
 			}
-		} catch (MozartRuntimeException e) {
-			throw new MozartRuntimeException(e);
-		}
-	}
-
-	public MozartPitchType getKey() {
-		return this.key;
-	}
-
-	public MozartScaleType getScale() {
-		return this.scale;
-	}
-
-	private void setKey(MozartPitchType key) throws MozartRuntimeException {
-		try {
-			if (key == null) {
-				throw new MozartRuntimeException(this.getClass().getName() + ": key is null.");
-			}
-			this.key = key;
+			this.scale = (MozartNoteType[]) scale.toArray();
 			return;
 		} catch (MozartRuntimeException e) {
 			throw new MozartRuntimeException(e);
 		}
 	}
 
-	private void setScale(MozartScaleType scale) throws MozartRuntimeException {
+	public MozartPitchType getRoot() {
+		return this.root;
+	}
+
+	public MozartNoteType[] getScale() {
+		return this.scale;
+	}
+
+	private MozartStepType[][] getStep() {
+		return this.step;
+	}
+
+	public MozartScaleType getType() {
+		return this.type;
+	}
+
+	private void setRoot(MozartPitchType root) throws MozartRuntimeException {
 		try {
-			if (scale == null) {
-				throw new MozartRuntimeException(this.getClass().getName() + ": scale is null.");
+			if (root == null) {
+				throw new MozartRuntimeException(this.getClass().getName() + ": root is null.");
 			}
-			this.scale = scale;
+			this.root = root;
+			return;
+		} catch (MozartRuntimeException e) {
+			throw new MozartRuntimeException(e);
+		}
+	}
+
+	private void setType(MozartScaleType type) throws MozartRuntimeException {
+		try {
+			if (type == null) {
+				throw new MozartRuntimeException(this.getClass().getName() + ": type is null.");
+			}
+			this.type = type;
 			return;
 		} catch (MozartRuntimeException e) {
 			throw new MozartRuntimeException(e);

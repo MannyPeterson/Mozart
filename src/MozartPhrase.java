@@ -12,7 +12,7 @@ public class MozartPhrase {
 	private MozartNotes[] phrase;
 	private int[] scale;
 
-	public MozartPhrase(MozartScale scale, int octave) throws MozartRuntimeException {
+	public MozartPhrase(MozartScaleOld scale, int octave) throws MozartRuntimeException {
 		try {
 			this.setScale(scale);
 			this.setKey(scale);
@@ -101,7 +101,7 @@ public class MozartPhrase {
 		return this.scale;
 	}
 
-	private void setKey(MozartScale scale) throws MozartRuntimeException {
+	private void setKey(MozartScaleOld scale) throws MozartRuntimeException {
 		try {
 			if (scale == null) {
 				throw new MozartRuntimeException(this.getClass().getName() + ": scale is null.");
@@ -139,7 +139,7 @@ public class MozartPhrase {
 		}
 	}
 
-	private void setScale(MozartScale scale) throws MozartRuntimeException {
+	private void setScale(MozartScaleOld scale) throws MozartRuntimeException {
 		try {
 			if (scale == null) {
 				throw new MozartRuntimeException(this.getClass().getName() + ": scale is null.");
