@@ -6,7 +6,9 @@ public class MozartMain {
 
 		MozartScale scale = new MozartScale(MozartScaleType.MAJOR, MozartPitchType.C);
 		
-
+		MozartPhrase phrase = new MozartPhrase(scale, MozartOctaveType.SIXTH);
+		
+		
 		for(MozartNote note : scale.getScale()) {
 			System.out.println(note);
 		}
