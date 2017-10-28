@@ -4,9 +4,13 @@ public class MozartMain {
 	public static void main(String[] args) {
 
 
-		MozartScale scale = new MozartScale(MozartScaleType.MINOR, MozartPitchType.C);
+		MozartScale scale = new MozartScale(MozartScaleType.MAJOR, MozartPitchType.C);
 		
 
+		for(MozartNote note : scale.getScale()) {
+			System.out.println(note);
+		}
+		
 		/*
 		 * MozartScale mozartScale; MozartPhrase mozartPhrase; MozartNotes[] phrase;
 		 * mozartScale = new MozartScale("C", MozartScale.SCALE_MAJOR); mozartPhrase =

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class MozartScale {
 	MozartPitchType root;
-	MozartNoteType[] scale;
+	MozartNote[] scale;
 	MozartStepType[][] step = {
 			{ MozartStepType.WHOLE, MozartStepType.WHOLE, MozartStepType.HALF, MozartStepType.WHOLE,
 					MozartStepType.WHOLE, MozartStepType.WHOLE, MozartStepType.HALF },
@@ -48,7 +48,8 @@ public class MozartScale {
 					}
 				}
 			}
-			this.scale = (MozartNoteType[]) scale.toArray();
+			this.setScale(new MozartNote[scale.size()]);
+			this.setScale(scale.toArray(this.getScale()));
 			return;
 		} catch (MozartRuntimeException e) {
 			throw new MozartRuntimeException(e);
@@ -59,7 +60,7 @@ public class MozartScale {
 		return this.root;
 	}
 
-	public MozartNoteType[] getScale() {
+	public MozartNote[] getScale() {
 		return this.scale;
 	}
 
@@ -77,6 +78,18 @@ public class MozartScale {
 				throw new MozartRuntimeException(this.getClass().getName() + ": root is null.");
 			}
 			this.root = root;
+			return;
+		} catch (MozartRuntimeException e) {
+			throw new MozartRuntimeException(e);
+		}
+	}
+
+	private void setScale(MozartNote[] scale) throws MozartRuntimeException {
+		try {
+			if (scale == null) {
+				throw new MozartRuntimeException(this.getClass().getName() + ": scale is null.");
+			}
+			this.scale = scale;
 			return;
 		} catch (MozartRuntimeException e) {
 			throw new MozartRuntimeException(e);
