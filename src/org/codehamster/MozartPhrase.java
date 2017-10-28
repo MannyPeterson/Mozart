@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class MozartPhrase {
 	private MozartOctaveType octave;
-	private int[][] pattern = { { 1, 2, 3, 4, 5 }, { -1, -2, -3, -4, -5 }, { 0, 0, 0, 0, 0 }};
+	private int[][] pattern = { { 1, 2, 3, 4, 5 }, { -1, -2, -3, -4, -5 }, { 0, 0, 0, 0, 0 } };
 	private MozartNote[] phrase;
 	private MozartScale scale;
 
@@ -41,9 +41,10 @@ public class MozartPhrase {
 				scaleIndex += 1;
 			}
 			for (int i = 0; i < 100; i++) {
-				patternsIndex = random.nextInt(this.pattern.length);
-				for (patternIndex = 0; patternIndex < this.pattern[patternsIndex].length; patternIndex++) {
-					phrase.add(this.getScale().getScale()[rootNoteIndex + this.pattern[patternsIndex][patternIndex]]);
+				patternsIndex = random.nextInt(this.getPattern().length);
+				for (patternIndex = 0; patternIndex < this.getPattern()[patternsIndex].length; patternIndex++) {
+					phrase.add(
+							this.getScale().getScale()[rootNoteIndex + this.getPattern()[patternsIndex][patternIndex]]);
 				}
 			}
 			this.setPhrase(new MozartNote[phrase.size()]);
@@ -56,6 +57,10 @@ public class MozartPhrase {
 
 	public MozartOctaveType getOctave() {
 		return this.octave;
+	}
+
+	public int[][] getPattern() {
+		return this.pattern;
 	}
 
 	public MozartNote[] getPhrase() {
