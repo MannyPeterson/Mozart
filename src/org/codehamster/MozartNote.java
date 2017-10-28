@@ -22,7 +22,7 @@ public class MozartNote {
 	public MozartLengthType getLength() {
 		return this.length;
 	}
-
+/*
 	public int getMIDINote() throws MozartRuntimeException {
 		try {
 			int retVal;
@@ -35,7 +35,7 @@ public class MozartNote {
 			throw new MozartRuntimeException(e);
 		}
 	}
-
+*/
 	public MozartNoteType getNote() {
 		return this.note;
 	}

@@ -13,6 +13,7 @@ public class MozartMain {
 
 		MozartPhrase phrase = new MozartPhrase(scale, MozartOctaveType.SIXTH, 100);
 
+		/*
 		int i;
 		int j;
 		try {
@@ -36,6 +37,6 @@ public class MozartMain {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-
+*/
 	}
 }

@@ -21,11 +21,11 @@ public class MozartInstrumentNote {
 		return this.MIDINote;
 	}
 
-	public int getTicks() {
+	private int getTicks() {
 		return this.ticks;
 	}
 
-	public int getTTL() {
+	private int getTTL() {
 		return this.TTL;
 	}
 
