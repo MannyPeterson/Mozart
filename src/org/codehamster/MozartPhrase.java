@@ -1,9 +1,11 @@
 package org.codehamster;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class MozartPhrase {
 	private MozartOctaveType octave;
+	private int[][] pattern = { { 1, 2, 3, 4, 5 }, { -1, -2, -3, -4, -5 }, { 0, 0, 0, 0, 0 }};
 	private MozartNote[] phrase;
 	private MozartScale scale;
 
@@ -20,14 +22,30 @@ public class MozartPhrase {
 
 	private void create() throws MozartRuntimeException {
 		ArrayList<MozartNote> phrase;
+		Random random = new Random();
+		int scaleIndex;
+		int patternsIndex;
+		int patternIndex;
+		int rootNoteIndex;
 		try {
+			scaleIndex = 0;
+			rootNoteIndex = 0;
+			patternsIndex = 0;
+			patternIndex = 0;
 			phrase = new ArrayList<MozartNote>();
-
-			/*
-			 * 
-			 * Do the important stuff in here.
-			 */
-			
+			for (MozartNote note : this.getScale().getScale()) {
+				if (note.getPitch() == this.getScale().getRoot() & note.getOctave() == this.getOctave()) {
+					rootNoteIndex = scaleIndex;
+					break;
+				}
+				scaleIndex += 1;
+			}
+			for (int i = 0; i < 100; i++) {
+				patternsIndex = random.nextInt(this.pattern.length);
+				for (patternIndex = 0; patternIndex < this.pattern[patternsIndex].length; patternIndex++) {
+					phrase.add(this.getScale().getScale()[rootNoteIndex + this.pattern[patternsIndex][patternIndex]]);
+				}
+			}
 			this.setPhrase(new MozartNote[phrase.size()]);
 			this.setPhrase(phrase.toArray(this.getPhrase()));
 			return;

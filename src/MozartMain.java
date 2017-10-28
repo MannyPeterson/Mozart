@@ -8,9 +8,10 @@ public class MozartMain {
 		
 		MozartPhrase phrase = new MozartPhrase(scale, MozartOctaveType.SIXTH);
 		
-		
+		int i = 0;
 		for(MozartNote note : scale.getScale()) {
-			System.out.println(note);
+			System.out.println(phrase.getPhrase()[i]);
+			i += 1;
 		}
 		
 		/*
