@@ -3,7 +3,7 @@ import java.util.Random;
 
 import org.codehamster.MozartRuntimeException;
 
-public class MozartPhrase {
+public class MozartPhraseOld {
 	private final static int[][] patterns = { {1},{2}};
 
 	private final static int[] lengths = { 4, 8, 16, 32 };
@@ -12,7 +12,7 @@ public class MozartPhrase {
 	private MozartNotes[] phrase;
 	private int[] scale;
 
-	public MozartPhrase(MozartScaleOld scale, int octave) throws MozartRuntimeException {
+	public MozartPhraseOld(MozartScaleOld scale, int octave) throws MozartRuntimeException {
 		try {
 			this.setScale(scale);
 			this.setKey(scale);
@@ -50,9 +50,9 @@ public class MozartPhrase {
 			do {
 				skip = false;
 				scaleIndexTemp = scaleIndex;
-				patternsIndex = rand.nextInt(MozartPhrase.patterns.length);
-				for (patternIndex = 0; patternIndex < MozartPhrase.patterns[patternsIndex].length; patternIndex++) {
-					scaleIndexTemp += MozartPhrase.patterns[patternsIndex][patternIndex];
+				patternsIndex = rand.nextInt(MozartPhraseOld.patterns.length);
+				for (patternIndex = 0; patternIndex < MozartPhraseOld.patterns[patternsIndex].length; patternIndex++) {
+					scaleIndexTemp += MozartPhraseOld.patterns[patternsIndex][patternIndex];
 					if (scaleIndexTemp < 0 | scaleIndexTemp > this.scale.length - 1) {
 						skip = true;
 						break;
@@ -66,8 +66,8 @@ public class MozartPhrase {
 				}
 				length = 8;
 				if (!skip) {
-					for (patternIndex = 0; patternIndex < MozartPhrase.patterns[patternsIndex].length; patternIndex++) {
-						scaleIndex += MozartPhrase.patterns[patternsIndex][patternIndex];
+					for (patternIndex = 0; patternIndex < MozartPhraseOld.patterns[patternsIndex].length; patternIndex++) {
+						scaleIndex += MozartPhraseOld.patterns[patternsIndex][patternIndex];
 						note = this.scale[scaleIndex];
 						phraseTemp[i] = new MozartNotes(MozartNotes.TYPE_NORMAL, note, length);
 						i += 1;
