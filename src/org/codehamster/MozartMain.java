@@ -8,7 +8,7 @@ public class MozartMain {
 
 		MozartScale scale = new MozartScale(MozartScaleType.MAJOR, MozartPitchType.C);
 
-		MozartPhrase phrase = new MozartPhrase(scale, MozartOctaveType.SIXTH, 10);
+		MozartPhrase phrase = new MozartPhrase(scale, MozartOctaveType.SIXTH, 100);
 
 		MozartInstrument inst = new MozartInstrument();
 
