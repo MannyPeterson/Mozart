@@ -41,7 +41,6 @@ public class MozartMain {
 		System.out.println("");
 		System.out.println("You should have received a copy of the GNU General Public License");
 		System.out.println("along with this program.  If not, see <https://www.gnu.org/licenses/>.");
-
 		Random random;
 		MozartScale scale;
 		MozartArrangement arrangement;
