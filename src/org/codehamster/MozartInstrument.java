@@ -30,15 +30,26 @@ import javax.sound.midi.Receiver;
 import javax.sound.midi.ShortMessage;
 
 public class MozartInstrument {
+	private MidiDevice midiDevice;
 	private Receiver midiReceiver;
 	private MozartInstrumentNote[] notes;
 
 	public MozartInstrument() throws MozartRuntimeException {
 		try {
 			this.init();
-			this.midi();
 			return;
 		} catch (MozartRuntimeException e) {
+			throw new MozartRuntimeException(e);
+		}
+	}
+
+	public void close() throws MozartRuntimeException {
+		try {
+			Thread.sleep(5000);
+			this.midiReceiver.close();
+			this.midiDevice.close();
+			return;
+		} catch (InterruptedException e) {
 			throw new MozartRuntimeException(e);
 		}
 	}
@@ -65,13 +76,12 @@ public class MozartInstrument {
 		}
 	}
 
-	private void midi() throws MozartRuntimeException {
+	public void open() throws MozartRuntimeException {
 		Info[] midiDevicesInfo;
-		MidiDevice midiDevice;
 		try {
 			midiDevicesInfo = MidiSystem.getMidiDeviceInfo();
-			midiDevice = MidiSystem.getMidiDevice(midiDevicesInfo[0]);
-			midiDevice.open();
+			this.midiDevice = MidiSystem.getMidiDevice(midiDevicesInfo[0]);
+			this.midiDevice.open();
 			this.midiReceiver = midiDevice.getReceiver();
 			Thread.sleep(5000);
 			return;
@@ -82,7 +92,8 @@ public class MozartInstrument {
 		}
 	}
 
-	public void play(MozartPhrase phrase) throws InvalidMidiDataException, InterruptedException  { /* Bypassing getters and/or setters for performance */
+	public void play(MozartPhrase phrase) throws InvalidMidiDataException,
+			InterruptedException { /* Bypassing getters and/or setters for performance */
 		int length;
 		for (MozartNote phraseNote : phrase.getPhrase()) {
 			for (MozartInstrumentNote instNote : this.notes) {

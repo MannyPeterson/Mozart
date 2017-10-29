@@ -51,9 +51,11 @@ public class MozartMain {
 				arrangement.addPhrase(new MozartPhrase(scale, MozartOctaveType.SIXTH, 60));
 			}
 			arrangement.create();
+			instrument.open();
 			for (MozartPhrase phrase : arrangement.getArrangement()) {
 				instrument.play(phrase);
 			}
+			instrument.close();
 			return;
 		} catch (MozartRuntimeException e) {
 			throw new MozartRuntimeException(e);
