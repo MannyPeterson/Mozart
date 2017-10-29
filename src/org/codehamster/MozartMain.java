@@ -20,6 +20,8 @@
 
 package org.codehamster;
 
+import java.util.Random;
+
 import javax.sound.midi.InvalidMidiDataException;
 
 public class MozartMain {
@@ -39,16 +41,18 @@ public class MozartMain {
 		System.out.println("");
 		System.out.println("You should have received a copy of the GNU General Public License");
 		System.out.println("along with this program.  If not, see <https://www.gnu.org/licenses/>.");
-		
+
+		Random random;
 		MozartScale scale;
 		MozartArrangement arrangement;
 		MozartInstrument instrument;
 		try {
+			random = new Random(System.currentTimeMillis());
 			scale = new MozartScale(MozartScaleType.MAJOR, MozartPitchType.C_SHARP_D_FLAT);
 			arrangement = new MozartArrangement(10);
 			instrument = new MozartInstrument();
 			for (int i = 0; i < 6; i++) {
-				arrangement.addPhrase(new MozartPhrase(scale, MozartOctaveType.SIXTH, 60));
+				arrangement.addPhrase(new MozartPhrase(scale, MozartOctaveType.SIXTH, random, 60));
 			}
 			arrangement.create();
 			instrument.open();

@@ -53,12 +53,14 @@ public class MozartPhrase {
 			{ 3, 6, 11, 8, 10, 7, 9, 6, 3, -1, -5, -9, -5, -1, 3, 6, 9, 7, 10, 8 },
 			{ -6, -4, -6, 6, 0, 6, 5, 6, -6, 0, -6, -5, -6, -4, -2, 0, 6, 4, 2, 0 } };
 	private MozartNote[] phrase;
+	private Random random;
 	private MozartScale scale;
 
-	public MozartPhrase(MozartScale scale, MozartOctaveType octave, int length) throws MozartRuntimeException {
+	public MozartPhrase(MozartScale scale, MozartOctaveType octave, Random random, int length) throws MozartRuntimeException {
 		try {
 			this.setScale(scale);
 			this.setOctave(octave);
+			this.setRandom(random);
 			this.setLength(length);
 			this.create();
 			return;
@@ -66,10 +68,9 @@ public class MozartPhrase {
 			throw new MozartRuntimeException(e);
 		}
 	}
-
+	
 	private void create() throws MozartRuntimeException {
 		ArrayList<MozartNote> phrase;
-		Random random = new Random();
 		MozartNote patternNote;
 		int scaleIndex;
 		int patternsIndex;
@@ -89,7 +90,7 @@ public class MozartPhrase {
 				scaleIndex += 1;
 			}
 			for (int i = 0; i < this.getLength(); i++) {
-				patternsIndex = random.nextInt(this.getPattern().length);
+				patternsIndex = this.getRandom().nextInt(this.getPattern().length);
 				for (patternIndex = 0; patternIndex < this.getPattern()[patternsIndex].length; patternIndex++) {
 					patternNote = this.getScale().getScale()[rootNoteIndex
 							+ this.getPattern()[patternsIndex][patternIndex]];
@@ -105,7 +106,7 @@ public class MozartPhrase {
 			throw new MozartRuntimeException(e);
 		}
 	}
-
+	
 	public int getLength() {
 		return this.length;
 	}
@@ -120,6 +121,10 @@ public class MozartPhrase {
 
 	public MozartNote[] getPhrase() {
 		return this.phrase;
+	}
+
+	private Random getRandom() {
+		return this.random;
 	}
 
 	private MozartScale getScale() {
@@ -156,6 +161,18 @@ public class MozartPhrase {
 				throw new MozartRuntimeException(this.getClass().getName() + ": phrase is null.");
 			}
 			this.phrase = phrase;
+			return;
+		} catch (MozartRuntimeException e) {
+			throw new MozartRuntimeException(e);
+		}
+	}
+	
+	private void setRandom(Random random) throws MozartRuntimeException {
+		try {
+			if (random == null) {
+				throw new MozartRuntimeException(this.getClass().getName() + ": random is null.");
+			}
+			this.random = random;
 			return;
 		} catch (MozartRuntimeException e) {
 			throw new MozartRuntimeException(e);
