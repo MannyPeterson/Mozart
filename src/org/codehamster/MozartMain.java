@@ -6,7 +6,7 @@ public class MozartMain {
 	public static void main(String[] args) throws InvalidMidiDataException, InterruptedException {
 		System.out.println("Mozart Digital Composer v0.1 (C)Copyright 2017 Manny Peterson All Rights Reserved");
 
-		MozartScale scale = new MozartScale(MozartScaleType.MAJOR, MozartPitchType.C);
+		MozartScale scale = new MozartScale(MozartScaleType.MINOR, MozartPitchType.C_SHARP_D_FLAT);
 		
 		
 		MozartPhrase phrase1 = new MozartPhrase(scale, MozartOctaveType.SIXTH, 100);
@@ -25,9 +25,10 @@ public class MozartMain {
 		arrange.addPhrase(phrase5);
 		arrange.addPhrase(phrase6);
 		
-		System.out.println(arrange.getPhrases()[0].getPhrase().length);
 		
 		MozartInstrument inst = new MozartInstrument();
+		
+		inst.play(phrase1);
 
 
 

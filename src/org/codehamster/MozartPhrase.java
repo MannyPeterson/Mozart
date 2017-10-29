@@ -84,7 +84,7 @@ public class MozartPhrase {
 		return this.octave;
 	}
 
-	public int[][] getPattern() {
+	private int[][] getPattern() {
 		return this.pattern;
 	}
 
@@ -92,7 +92,7 @@ public class MozartPhrase {
 		return this.phrase;
 	}
 
-	public MozartScale getScale() {
+	private MozartScale getScale() {
 		return this.scale;
 	}
 
