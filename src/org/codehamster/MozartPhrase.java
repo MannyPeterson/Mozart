@@ -105,7 +105,6 @@ public class MozartPhrase {
 			return;
 		} catch (MozartRuntimeException e) {
 			throw new MozartRuntimeException(e);
-
 		}
 	}
 
@@ -118,7 +117,6 @@ public class MozartPhrase {
 			return;
 		} catch (MozartRuntimeException e) {
 			throw new MozartRuntimeException(e);
-
 		}
 	}
 
@@ -131,7 +129,6 @@ public class MozartPhrase {
 			return;
 		} catch (MozartRuntimeException e) {
 			throw new MozartRuntimeException(e);
-
 		}
 	}
 
