@@ -1,5 +1,7 @@
 package org.codehamster;
 
+import java.util.ArrayList;
+
 public class MozartArrangement {
 	private MozartPhrase[] arrangement;
 	private int length;
@@ -41,8 +43,19 @@ public class MozartArrangement {
 	}
 
 	public void create() throws MozartRuntimeException {
+		ArrayList<MozartPhrase> arrangement;
+		int i;
+		int j;
 		try {
-
+			arrangement = new ArrayList<MozartPhrase>();
+			i = 0;
+			j = 0;
+			for (i = 0; i < this.getLength(); i++) {
+				arrangement.add(this.getPhrases()[j]);
+				j = (j + 1) % this.getPhrases().length;
+			}
+			this.setArrangement(new MozartPhrase[arrangement.size()]);
+			this.setArrangement(arrangement.toArray(this.getArrangement()));
 			return;
 		} catch (MozartRuntimeException e) {
 			throw new MozartRuntimeException(e);
