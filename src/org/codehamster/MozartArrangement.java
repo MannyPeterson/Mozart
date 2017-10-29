@@ -3,6 +3,7 @@ package org.codehamster;
 public class MozartArrangement {
 	private MozartPhrase[] arrangement;
 	private int length;
+	private MozartPhrase[] phrases;
 
 	public MozartArrangement(int length) throws MozartRuntimeException {
 		try {
@@ -14,25 +15,34 @@ public class MozartArrangement {
 	}
 
 	public void addPhrase(MozartPhrase phrase) throws MozartRuntimeException {
-		MozartPhrase[] newArrangement;
-		int newArrangementIndex;
+		MozartPhrase[] newPhrases;
+		int newPhrasesIndex;
 		try {
 			if (phrase == null) {
 				throw new MozartRuntimeException(this.getClass().getName() + ": phrase is null.");
 			}
-			if (this.getArrangement() == null) {
-				this.setArrangement(new MozartPhrase[1]);
-				this.getArrangement()[0] = phrase;
+			if (this.getPhrases() == null) {
+				this.setPhrases(new MozartPhrase[1]);
+				this.getPhrases()[0] = phrase;
 			} else {
-				newArrangementIndex = 0;
-				newArrangement = new MozartPhrase[this.getArrangement().length + 1];
-				for (MozartPhrase phraseCopy : this.getArrangement()) {
-					newArrangement[newArrangementIndex] = phraseCopy;
-					newArrangementIndex += 1;
+				newPhrasesIndex = 0;
+				newPhrases = new MozartPhrase[this.getPhrases().length + 1];
+				for (MozartPhrase phraseCopy : this.getPhrases()) {
+					newPhrases[newPhrasesIndex] = phraseCopy;
+					newPhrasesIndex += 1;
 				}
-				newArrangement[newArrangementIndex] = phrase;
-				this.setArrangement(newArrangement);
+				newPhrases[newPhrasesIndex] = phrase;
+				this.setPhrases(newPhrases);
 			}
+			return;
+		} catch (MozartRuntimeException e) {
+			throw new MozartRuntimeException(e);
+		}
+	}
+
+	public void create() throws MozartRuntimeException {
+		try {
+
 			return;
 		} catch (MozartRuntimeException e) {
 			throw new MozartRuntimeException(e);
@@ -47,6 +57,10 @@ public class MozartArrangement {
 		return this.length;
 	}
 
+	public MozartPhrase[] getPhrases() {
+		return this.phrases;
+	}
+
 	private void setArrangement(MozartPhrase[] arrangement) throws MozartRuntimeException {
 		try {
 			if (arrangement == null) {
@@ -56,7 +70,6 @@ public class MozartArrangement {
 			return;
 		} catch (MozartRuntimeException e) {
 			throw new MozartRuntimeException(e);
-
 		}
 	}
 
@@ -66,6 +79,18 @@ public class MozartArrangement {
 				throw new MozartRuntimeException(this.getClass().getName() + ": length is zero or less.");
 			}
 			this.length = length;
+			return;
+		} catch (MozartRuntimeException e) {
+			throw new MozartRuntimeException(e);
+		}
+	}
+
+	private void setPhrases(MozartPhrase[] phrases) throws MozartRuntimeException {
+		try {
+			if (phrases == null) {
+				throw new MozartRuntimeException(this.getClass().getName() + ": phrases is null.");
+			}
+			this.phrases = phrases;
 			return;
 		} catch (MozartRuntimeException e) {
 			throw new MozartRuntimeException(e);
