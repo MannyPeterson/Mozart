@@ -41,20 +41,7 @@ public class MozartNote {
 	public MozartLengthType getLength() {
 		return this.length;
 	}
-/*
-	public int getMIDINote() throws MozartRuntimeException {
-		try {
-			int retVal;
-			retVal = (this.octave.getValue() * 12) + this.pitch.getValue();
-			if (retVal < 0 | retVal > 127) {
-				retVal = 0;
-			}
-			return retVal;
-		} catch (MozartRuntimeException e) {
-			throw new MozartRuntimeException(e);
-		}
-	}
-*/
+
 	public MozartNoteType getNote() {
 		return this.note;
 	}
