@@ -45,9 +45,12 @@ public class MozartMain {
 		MozartScale scale;
 		MozartArrangement arrangement;
 		MozartInstrument instrument;
+		MozartFrame frame;
 		try {
+			frame = new MozartFrame();
+			frame.setVisible(true);
 			random = new Random(System.currentTimeMillis());
-			scale = new MozartScale(MozartScaleType.MAJOR, MozartPitchType.C_SHARP_D_FLAT);
+			scale = new MozartScale(MozartScaleType.MAJOR, MozartPitchType.D_SHARP_E_FLAT);
 			arrangement = new MozartArrangement(10);
 			instrument = new MozartInstrument();
 			for (int i = 0; i < 6; i++) {

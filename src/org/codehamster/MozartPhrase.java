@@ -56,7 +56,8 @@ public class MozartPhrase {
 	private Random random;
 	private MozartScale scale;
 
-	public MozartPhrase(MozartScale scale, MozartOctaveType octave, Random random, int length) throws MozartRuntimeException {
+	public MozartPhrase(MozartScale scale, MozartOctaveType octave, Random random, int length)
+			throws MozartRuntimeException {
 		try {
 			this.setScale(scale);
 			this.setOctave(octave);
@@ -68,7 +69,7 @@ public class MozartPhrase {
 			throw new MozartRuntimeException(e);
 		}
 	}
-	
+
 	private void create() throws MozartRuntimeException {
 		ArrayList<MozartNote> phrase;
 		MozartNote patternNote;
@@ -106,7 +107,7 @@ public class MozartPhrase {
 			throw new MozartRuntimeException(e);
 		}
 	}
-	
+
 	public int getLength() {
 		return this.length;
 	}
@@ -166,7 +167,7 @@ public class MozartPhrase {
 			throw new MozartRuntimeException(e);
 		}
 	}
-	
+
 	private void setRandom(Random random) throws MozartRuntimeException {
 		try {
 			if (random == null) {
