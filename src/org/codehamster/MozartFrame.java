@@ -9,6 +9,8 @@ import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class MozartFrame extends JFrame {
 
@@ -33,6 +35,11 @@ public class MozartFrame extends JFrame {
 		contentPane.add(lblMozartImg);
 
 		JButton btnExit = new JButton("Exit");
+		btnExit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
 		btnExit.setBounds(677, 504, 117, 29);
 		contentPane.add(btnExit);
 
