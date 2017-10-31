@@ -14,6 +14,9 @@ public class MozartFrame extends JFrame {
 
 	private static final long serialVersionUID = -8514276561086641341L;
 	private JPanel contentPane;
+	private JTextArea txtConsole;
+	private JScrollBar txtConsoleScrollBar;
+	private JScrollPane txtConsoleScrollPane;
 
 	public MozartFrame() {
 		setTitle("Mozart Digital Composer");
@@ -37,22 +40,26 @@ public class MozartFrame extends JFrame {
 		btnPlay.setBounds(555, 504, 117, 29);
 		contentPane.add(btnPlay);
 
-		JTextArea txtConsole = new JTextArea();
-		txtConsole.setEditable(false);
-		txtConsole.setBounds(197, 6, 597, 257);
-		contentPane.add(txtConsole);
+		this.txtConsole = new JTextArea();
+		this.txtConsole.setEditable(false);
+		this.txtConsole.setBounds(197, 6, 597, 257);
+		contentPane.add(this.txtConsole);
 
-		JScrollPane txtConsoleScrollPane = new JScrollPane(txtConsole);
-		txtConsoleScrollPane.setBounds(197, 6, 597, 257);
-		contentPane.add(txtConsoleScrollPane);
+		this.txtConsoleScrollPane = new JScrollPane(this.txtConsole);
+		this.txtConsoleScrollPane.setBounds(197, 6, 597, 257);
+		contentPane.add(this.txtConsoleScrollPane);
 
-		JScrollBar txtConsoleScrollBar = txtConsoleScrollPane.getVerticalScrollBar();
+		this.txtConsoleScrollBar = this.txtConsoleScrollPane.getVerticalScrollBar();
 
 		txtConsole.append(
 				"Mozart Digital Composer Version 0.1\nCopyright (C) 2017 Manny Peterson <me@mannypeterson.com>\n\nThis program is free software: you can redistribute it and/or modify\nit under the terms of the GNU General Public License as published by\nthe Free Software Foundation, either version 3 of the License, or\n(at your option) any later version.\n\nThis program is distributed in the hope that it will be useful,\nbut WITHOUT ANY WARRANTY; without even the implied warranty of\nMERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\nGNU General Public License for more details.\n\nYou should have received a copy of the GNU General Public License\nalong with this program.  If not, see <https://www.gnu.org/licenses/>.\n");
 
-		txtConsoleScrollBar.setValue(txtConsoleScrollBar.getMaximum());
+	}
 
+	public void writeConsole(String text) {
+		this.txtConsole.append(text + "\n");
+		this.txtConsoleScrollBar.setValue(this.txtConsoleScrollBar.getMaximum());
+		return;
 	}
 
 }

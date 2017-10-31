@@ -92,10 +92,11 @@ public class MozartInstrument {
 		}
 	}
 
-	public void play(MozartPhrase phrase) throws InvalidMidiDataException,
+	public void play(MozartPhrase phrase, MozartFrame frame) throws InvalidMidiDataException,
 			InterruptedException { /* Bypassing getters and/or setters for performance */
 		int length;
 		for (MozartNote phraseNote : phrase.getPhrase()) {
+			frame.writeConsole(phraseNote.toString());
 			for (MozartInstrumentNote instNote : this.notes) {
 				instNote.play(phraseNote);
 			}
