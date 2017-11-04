@@ -20,40 +20,22 @@
 
 package org.codehamster;
 
+import java.awt.EventQueue;
 import java.util.Random;
 
 import javax.sound.midi.InvalidMidiDataException;
 
 public class MozartMain {
 	public static void main(String[] args) {
-		Random random;
-		MozartScale scale;
-		MozartArrangement arrangement;
-		MozartInstrument instrument;
-		MozartFrame frame;
-		try {
-			frame = new MozartFrame();
-			frame.setVisible(true);
-			random = new Random(System.currentTimeMillis());
-			scale = new MozartScale(MozartScaleType.MAJOR, MozartPitchType.D_SHARP_E_FLAT);
-			arrangement = new MozartArrangement(10);
-			instrument = new MozartInstrument();
-			for (int i = 0; i < 6; i++) {
-				arrangement.addPhrase(new MozartPhrase(scale, MozartOctaveType.SIXTH, random, 60));
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					MozartFrame frame = new MozartFrame();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
-			arrangement.create();
-			instrument.open();
-			for (MozartPhrase phrase : arrangement.getArrangement()) {
-				instrument.play(phrase, frame);
-			}
-			instrument.close();
-			return;
-		} catch (MozartRuntimeException e) {
-			throw new MozartRuntimeException(e);
-		} catch (InvalidMidiDataException e) {
-			throw new MozartRuntimeException(e);
-		} catch (InterruptedException e) {
-			throw new MozartRuntimeException(e);
-		}
+		});
 	}
 }

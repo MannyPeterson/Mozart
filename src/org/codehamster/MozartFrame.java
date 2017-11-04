@@ -19,6 +19,7 @@
  */
 package org.codehamster;
 
+import javax.sound.midi.InvalidMidiDataException;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -27,9 +28,12 @@ import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.SwingWorker;
 import javax.swing.border.EmptyBorder;
 import java.awt.event.ActionListener;
+import java.util.Random;
 import java.awt.event.ActionEvent;
+import javax.swing.JList;
 
 public class MozartFrame extends JFrame {
 
@@ -40,6 +44,11 @@ public class MozartFrame extends JFrame {
 	private JScrollPane txtConsoleScrollPane;
 
 	public MozartFrame() {
+		/*
+		 * 
+		 * THIS CODE IS A MESS AT THE MOMENT - IT WILL BE REFINED
+		 * 
+		 */
 		setTitle("Mozart Digital Composer");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 560);
@@ -55,7 +64,7 @@ public class MozartFrame extends JFrame {
 
 		JButton btnExit = new JButton("Exit");
 		btnExit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent ae) {
 				System.exit(0);
 			}
 		});
@@ -63,6 +72,53 @@ public class MozartFrame extends JFrame {
 		contentPane.add(btnExit);
 
 		JButton btnPlay = new JButton("Play");
+		btnPlay.addActionListener(new ActionListener() {
+			private MozartFrame frame;
+
+			public ActionListener setFrame(MozartFrame frame) {
+				this.frame = frame;
+				return this;
+			}
+
+			public void actionPerformed(ActionEvent ae) {
+				MozartFrame frame = this.frame;
+				new SwingWorker<Void, Void>() {
+					public Void doInBackground() throws Exception {
+						Random random;
+						MozartScale scale;
+						MozartArrangement arrangement;
+						MozartInstrument instrument;
+						try {
+							random = new Random(System.currentTimeMillis());
+							scale = new MozartScale(MozartScaleType.MAJOR, MozartPitchType.D_SHARP_E_FLAT);
+							arrangement = new MozartArrangement(10);
+							instrument = new MozartInstrument();
+							for (int i = 0; i < 6; i++) {
+								arrangement.addPhrase(new MozartPhrase(scale, MozartOctaveType.SIXTH, random, 60));
+							}
+							arrangement.create();
+							instrument.open();
+							for (MozartPhrase phrase : arrangement.getArrangement()) {
+								instrument.play(phrase, frame);
+							}
+							instrument.close();
+							return null;
+						} catch (MozartRuntimeException ex) {
+							throw new MozartRuntimeException(ex);
+						} catch (InvalidMidiDataException ex) {
+							throw new MozartRuntimeException(ex);
+						} catch (InterruptedException ex) {
+							throw new MozartRuntimeException(ex);
+						}
+					}
+
+					protected void done() {
+
+					}
+				}.execute();
+
+			}
+		}.setFrame(this));
 		btnPlay.setBounds(555, 504, 117, 29);
 		contentPane.add(btnPlay);
 
@@ -74,6 +130,35 @@ public class MozartFrame extends JFrame {
 		this.txtConsoleScrollPane = new JScrollPane(this.txtConsole);
 		this.txtConsoleScrollPane.setBounds(197, 6, 597, 257);
 		contentPane.add(this.txtConsoleScrollPane);
+
+		String[] scaleItems = { "Major Scale", "Minor Scale" };
+
+		JList lstScale = new JList(scaleItems);
+		lstScale.setBounds(197, 290, 224, 182);
+		contentPane.add(lstScale);
+
+		JLabel lblScaleType = new JLabel("Scale");
+		lblScaleType.setBounds(197, 266, 90, 22);
+		contentPane.add(lblScaleType);
+
+		String[] keyItems = { "C", "C# / Db", "D", "D# / Eb", "E", "F", "F# / Gb", "G", "G# / Ab", "A", "A# / Bb",
+				"B" };
+
+		JList lstKey = new JList(keyItems);
+		lstKey.setBounds(454, 290, 224, 182);
+		contentPane.add(lstKey);
+
+		JLabel lblKey = new JLabel("Key");
+		lblKey.setBounds(454, 265, 90, 22);
+		contentPane.add(lblKey);
+
+		JScrollPane scrollPane = new JScrollPane(lstScale);
+		scrollPane.setBounds(197, 290, 224, 182);
+		contentPane.add(scrollPane);
+
+		JScrollPane scrollPane_1 = new JScrollPane(lstKey);
+		scrollPane_1.setBounds(454, 290, 224, 182);
+		contentPane.add(scrollPane_1);
 
 		this.txtConsoleScrollBar = this.txtConsoleScrollPane.getVerticalScrollBar();
 
@@ -87,5 +172,4 @@ public class MozartFrame extends JFrame {
 		this.txtConsoleScrollBar.setValue(this.txtConsoleScrollBar.getMaximum());
 		return;
 	}
-
 }
