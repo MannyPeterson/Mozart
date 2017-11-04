@@ -39,6 +39,8 @@ import javax.swing.JTextField;
 public class MozartFrame extends JFrame {
 
 	private static final long serialVersionUID = -8514276561086641341L;
+	private JButton btnExit;
+	private JButton btnPlay;
 	private JPanel contentPane;
 	private JList lstKey;
 	private JScrollPane lstKeyScrollPane;
@@ -59,8 +61,7 @@ public class MozartFrame extends JFrame {
 		JLabel lblKey;
 		JLabel lblPhraseLength;
 		JLabel lblSongLength;
-		JButton btnExit;
-		JButton btnPlay;
+
 		try {
 			setTitle("Mozart Digital Composer");
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -91,18 +92,18 @@ public class MozartFrame extends JFrame {
 			lblSongLength.setBounds(507, 325, 151, 22);
 			contentPane.add(lblSongLength);
 
-			btnExit = new JButton("Exit");
-			btnExit.setBounds(677, 504, 117, 29);
-			btnExit.addActionListener(new ActionListener() {
+			this.btnExit = new JButton("Exit");
+			this.btnExit.setBounds(677, 504, 117, 29);
+			this.btnExit.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent ae) {
 					System.exit(0);
 				}
 			});
-			contentPane.add(btnExit);
+			contentPane.add(this.btnExit);
 
-			btnPlay = new JButton("Play");
-			btnPlay.setBounds(555, 504, 117, 29);
-			btnPlay.addActionListener(new ActionListener() {
+			this.btnPlay = new JButton("Play");
+			this.btnPlay.setBounds(555, 504, 117, 29);
+			this.btnPlay.addActionListener(new ActionListener() {
 				private MozartFrame frame;
 
 				public void actionPerformed(ActionEvent ae) {
@@ -114,6 +115,7 @@ public class MozartFrame extends JFrame {
 							MozartArrangement arrangement;
 							MozartInstrument instrument;
 							try {
+								frame.playButtonEnabled(false);
 								random = new Random(System.currentTimeMillis());
 								frame.writeConsole("Scale: " + frame.getScale().getString());
 								frame.writeConsole("Key: " + frame.getKey().getString());
@@ -123,7 +125,8 @@ public class MozartFrame extends JFrame {
 								arrangement = new MozartArrangement(frame.getSongLength());
 								instrument = new MozartInstrument();
 								for (int i = 0; i < 6; i++) {
-									arrangement.addPhrase(new MozartPhrase(scale, MozartOctaveType.SIXTH, random, frame.getPhraseLength()));
+									arrangement.addPhrase(new MozartPhrase(scale, MozartOctaveType.SIXTH, random,
+											frame.getPhraseLength()));
 								}
 								arrangement.create();
 								instrument.open();
@@ -145,7 +148,7 @@ public class MozartFrame extends JFrame {
 						}
 
 						protected void done() {
-
+							frame.playButtonEnabled(true);
 						}
 					}.execute();
 				}
@@ -162,7 +165,7 @@ public class MozartFrame extends JFrame {
 					}
 				}
 			}.setFrame(this));
-			contentPane.add(btnPlay);
+			contentPane.add(this.btnPlay);
 
 			this.txtConsole = new JTextArea();
 			this.txtConsole.setBounds(197, 6, 597, 257);
@@ -300,6 +303,22 @@ public class MozartFrame extends JFrame {
 		} catch (MozartRuntimeException e) {
 			throw new MozartRuntimeException(e);
 		} catch (NumberFormatException e) {
+			throw new MozartRuntimeException(e);
+		}
+	}
+
+	public void playButtonEnabled(boolean state) throws MozartRuntimeException {
+		try {
+			if (this.btnPlay == null) {
+				throw new MozartRuntimeException(this.getClass().getName() + ": btnPlay is null.");
+			}
+			if (state) {
+				this.btnPlay.setEnabled(true);
+			} else {
+				this.btnPlay.setEnabled(false);
+			}
+			return;
+		} catch (MozartRuntimeException e) {
 			throw new MozartRuntimeException(e);
 		}
 	}
