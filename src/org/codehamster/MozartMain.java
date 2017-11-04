@@ -21,19 +21,17 @@
 package org.codehamster;
 
 import java.awt.EventQueue;
-import java.util.Random;
-
-import javax.sound.midi.InvalidMidiDataException;
 
 public class MozartMain {
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
+				MozartFrame frame;
 				try {
-					MozartFrame frame = new MozartFrame();
+					frame = new MozartFrame();
 					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
+				} catch (MozartRuntimeException e) {
+					throw new MozartRuntimeException(e);
 				}
 			}
 		});

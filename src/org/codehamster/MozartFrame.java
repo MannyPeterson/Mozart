@@ -40,6 +40,10 @@ public class MozartFrame extends JFrame {
 
 	private static final long serialVersionUID = -8514276561086641341L;
 	private JPanel contentPane;
+	private JList lstKey;
+	private JScrollPane lstKeyScrollPane;
+	private JList lstScale;
+	private JScrollPane lstScaleScrollPane;
 	private JTextArea txtConsole;
 	private JScrollBar txtConsoleScrollBar;
 	private JScrollPane txtConsoleScrollPane;
@@ -65,6 +69,22 @@ public class MozartFrame extends JFrame {
 		lblMozartImg.setBounds(6, 6, 185, 257);
 		contentPane.add(lblMozartImg);
 
+		JLabel lblScale = new JLabel("Scale");
+		lblScale.setBounds(197, 266, 90, 22);
+		contentPane.add(lblScale);
+
+		JLabel lblKey = new JLabel("Key");
+		lblKey.setBounds(356, 266, 90, 22);
+		contentPane.add(lblKey);
+
+		JLabel lblPhraseLength = new JLabel("Phrase Length (Notes)");
+		lblPhraseLength.setBounds(507, 265, 151, 22);
+		contentPane.add(lblPhraseLength);
+
+		JLabel lblSongLength = new JLabel("Song Length (Phrases)");
+		lblSongLength.setBounds(507, 325, 151, 22);
+		contentPane.add(lblSongLength);
+
 		JButton btnExit = new JButton("Exit");
 		btnExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
@@ -77,11 +97,6 @@ public class MozartFrame extends JFrame {
 		JButton btnPlay = new JButton("Play");
 		btnPlay.addActionListener(new ActionListener() {
 			private MozartFrame frame;
-
-			public ActionListener setFrame(MozartFrame frame) {
-				this.frame = frame;
-				return this;
-			}
 
 			public void actionPerformed(ActionEvent ae) {
 				MozartFrame frame = this.frame;
@@ -121,6 +136,11 @@ public class MozartFrame extends JFrame {
 				}.execute();
 
 			}
+
+			public ActionListener setFrame(MozartFrame frame) {
+				this.frame = frame;
+				return this;
+			}
 		}.setFrame(this));
 		btnPlay.setBounds(555, 504, 117, 29);
 		contentPane.add(btnPlay);
@@ -136,68 +156,52 @@ public class MozartFrame extends JFrame {
 
 		String[] scaleItems = { "Major Scale", "Minor Scale" };
 
-		JList lstScale = new JList(scaleItems);
-		lstScale.setBounds(197, 290, 224, 182);
-		lstScale.setSelectedIndex(0);
-		contentPane.add(lstScale);
-
-		JLabel lblScale = new JLabel("Scale");
-		lblScale.setBounds(197, 266, 90, 22);
-		contentPane.add(lblScale);
+		this.lstScale = new JList(scaleItems);
+		this.lstScale.setBounds(197, 290, 224, 182);
+		this.lstScale.setSelectedIndex(0);
+		contentPane.add(this.lstScale);
 
 		String[] keyItems = { "C", "C# / Db", "D", "D# / Eb", "E", "F", "F# / Gb", "G", "G# / Ab", "A", "A# / Bb",
 				"B" };
 
-		JList lstKey = new JList(keyItems);
-		lstKey.setBounds(454, 290, 224, 182);
-		lstKey.setSelectedIndex(0);
-		contentPane.add(lstKey);
+		this.lstKey = new JList(keyItems);
+		this.lstKey.setBounds(454, 290, 224, 182);
+		this.lstKey.setSelectedIndex(0);
+		contentPane.add(this.lstKey);
 
-		JLabel lblKey = new JLabel("Key");
-		lblKey.setBounds(356, 266, 90, 22);
-		contentPane.add(lblKey);
+		this.lstScaleScrollPane = new JScrollPane(this.lstScale);
+		this.lstScaleScrollPane.setBounds(197, 290, 129, 182);
+		contentPane.add(this.lstScaleScrollPane);
 
-		JScrollPane lstScaleScrollPane = new JScrollPane(lstScale);
-		lstScaleScrollPane.setBounds(197, 290, 129, 182);
-		contentPane.add(lstScaleScrollPane);
+		this.lstKeyScrollPane = new JScrollPane(this.lstKey);
+		this.lstKeyScrollPane.setBounds(356, 290, 129, 182);
+		contentPane.add(this.lstKeyScrollPane);
 
-		JScrollPane lstKeyScrollPane = new JScrollPane(lstKey);
-		lstKeyScrollPane.setBounds(356, 290, 129, 182);
-		contentPane.add(lstKeyScrollPane);
+		this.txtPhraseLength = new JTextField();
+		this.txtPhraseLength.setText("60");
+		this.txtPhraseLength.setBounds(502, 287, 130, 26);
+		contentPane.add(this.txtPhraseLength);
+		this.txtPhraseLength.setColumns(10);
 
-		txtPhraseLength = new JTextField();
-		txtPhraseLength.setText("60");
-		txtPhraseLength.setBounds(502, 287, 130, 26);
-		contentPane.add(txtPhraseLength);
-		txtPhraseLength.setColumns(10);
-
-		JLabel lblPhraseLength = new JLabel("Phrase Length (Notes)");
-		lblPhraseLength.setBounds(507, 265, 151, 22);
-		contentPane.add(lblPhraseLength);
-
-		txtSongLength = new JTextField();
-		txtSongLength.setText("10");
-		txtSongLength.setColumns(10);
-		txtSongLength.setBounds(502, 347, 130, 26);
-		contentPane.add(txtSongLength);
-
-		JLabel lblSongLength = new JLabel("Song Length (Phrases)");
-		lblSongLength.setBounds(507, 325, 151, 22);
-		contentPane.add(lblSongLength);
+		this.txtSongLength = new JTextField();
+		this.txtSongLength.setText("10");
+		this.txtSongLength.setColumns(10);
+		this.txtSongLength.setBounds(502, 347, 130, 26);
+		contentPane.add(this.txtSongLength);
 
 		this.txtConsoleScrollBar = this.txtConsoleScrollPane.getVerticalScrollBar();
 
-		txtConsole.append(
+		this.txtConsole.append(
 				"Mozart Digital Composer Version 0.1\nCopyright (C) 2017 Manny Peterson <me@mannypeterson.com>\n\nThis program is free software: you can redistribute it and/or modify\nit under the terms of the GNU General Public License as published by\nthe Free Software Foundation, either version 3 of the License, or\n(at your option) any later version.\n\nThis program is distributed in the hope that it will be useful,\nbut WITHOUT ANY WARRANTY; without even the implied warranty of\nMERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\nGNU General Public License for more details.\n\nYou should have received a copy of the GNU General Public License\nalong with this program.  If not, see <https://www.gnu.org/licenses/>.\n");
 
 	}
 
-	public MozartScaleType getScale() {
+	public MozartPitchType getKey() {
 
 		return null;
 	}
 
-	public MozartPitchType getKey() {
+	public MozartScaleType getScale() {
 
 		return null;
 	}
