@@ -30,8 +30,10 @@ public class MozartMain {
 				try {
 					frame = new MozartFrame();
 					frame.setVisible(true);
+					return;
 				} catch (MozartRuntimeException e) {
-					throw new MozartRuntimeException(e);
+					e.printStackTrace();
+					return;
 				}
 			}
 		});
