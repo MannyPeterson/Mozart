@@ -34,6 +34,7 @@ import java.awt.event.ActionListener;
 import java.util.Random;
 import java.awt.event.ActionEvent;
 import javax.swing.JList;
+import javax.swing.JTextField;
 
 public class MozartFrame extends JFrame {
 
@@ -42,6 +43,8 @@ public class MozartFrame extends JFrame {
 	private JTextArea txtConsole;
 	private JScrollBar txtConsoleScrollBar;
 	private JScrollPane txtConsoleScrollPane;
+	private JTextField txtPhraseLength;
+	private JTextField txtSongLength;
 
 	public MozartFrame() {
 		/*
@@ -83,7 +86,7 @@ public class MozartFrame extends JFrame {
 			public void actionPerformed(ActionEvent ae) {
 				MozartFrame frame = this.frame;
 				new SwingWorker<Void, Void>() {
-					public Void doInBackground() throws Exception {
+					public Void doInBackground() throws MozartRuntimeException {
 						Random random;
 						MozartScale scale;
 						MozartArrangement arrangement;
@@ -135,30 +138,52 @@ public class MozartFrame extends JFrame {
 
 		JList lstScale = new JList(scaleItems);
 		lstScale.setBounds(197, 290, 224, 182);
+		lstScale.setSelectedIndex(0);
 		contentPane.add(lstScale);
 
-		JLabel lblScaleType = new JLabel("Scale");
-		lblScaleType.setBounds(197, 266, 90, 22);
-		contentPane.add(lblScaleType);
+		JLabel lblScale = new JLabel("Scale");
+		lblScale.setBounds(197, 266, 90, 22);
+		contentPane.add(lblScale);
 
 		String[] keyItems = { "C", "C# / Db", "D", "D# / Eb", "E", "F", "F# / Gb", "G", "G# / Ab", "A", "A# / Bb",
 				"B" };
 
 		JList lstKey = new JList(keyItems);
 		lstKey.setBounds(454, 290, 224, 182);
+		lstKey.setSelectedIndex(0);
 		contentPane.add(lstKey);
 
 		JLabel lblKey = new JLabel("Key");
-		lblKey.setBounds(454, 265, 90, 22);
+		lblKey.setBounds(356, 266, 90, 22);
 		contentPane.add(lblKey);
 
-		JScrollPane scrollPane = new JScrollPane(lstScale);
-		scrollPane.setBounds(197, 290, 224, 182);
-		contentPane.add(scrollPane);
+		JScrollPane lstScaleScrollPane = new JScrollPane(lstScale);
+		lstScaleScrollPane.setBounds(197, 290, 129, 182);
+		contentPane.add(lstScaleScrollPane);
 
-		JScrollPane scrollPane_1 = new JScrollPane(lstKey);
-		scrollPane_1.setBounds(454, 290, 224, 182);
-		contentPane.add(scrollPane_1);
+		JScrollPane lstKeyScrollPane = new JScrollPane(lstKey);
+		lstKeyScrollPane.setBounds(356, 290, 129, 182);
+		contentPane.add(lstKeyScrollPane);
+
+		txtPhraseLength = new JTextField();
+		txtPhraseLength.setText("60");
+		txtPhraseLength.setBounds(502, 287, 130, 26);
+		contentPane.add(txtPhraseLength);
+		txtPhraseLength.setColumns(10);
+
+		JLabel lblPhraseLength = new JLabel("Phrase Length (Notes)");
+		lblPhraseLength.setBounds(507, 265, 151, 22);
+		contentPane.add(lblPhraseLength);
+
+		txtSongLength = new JTextField();
+		txtSongLength.setText("10");
+		txtSongLength.setColumns(10);
+		txtSongLength.setBounds(502, 347, 130, 26);
+		contentPane.add(txtSongLength);
+
+		JLabel lblSongLength = new JLabel("Song Length (Phrases)");
+		lblSongLength.setBounds(507, 325, 151, 22);
+		contentPane.add(lblSongLength);
 
 		this.txtConsoleScrollBar = this.txtConsoleScrollPane.getVerticalScrollBar();
 
@@ -166,17 +191,17 @@ public class MozartFrame extends JFrame {
 				"Mozart Digital Composer Version 0.1\nCopyright (C) 2017 Manny Peterson <me@mannypeterson.com>\n\nThis program is free software: you can redistribute it and/or modify\nit under the terms of the GNU General Public License as published by\nthe Free Software Foundation, either version 3 of the License, or\n(at your option) any later version.\n\nThis program is distributed in the hope that it will be useful,\nbut WITHOUT ANY WARRANTY; without even the implied warranty of\nMERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\nGNU General Public License for more details.\n\nYou should have received a copy of the GNU General Public License\nalong with this program.  If not, see <https://www.gnu.org/licenses/>.\n");
 
 	}
-	
+
 	public MozartScaleType getScale() {
-		
+
 		return null;
 	}
 
 	public MozartPitchType getKey() {
-		
+
 		return null;
 	}
-	
+
 	public void writeConsole(String text) {
 		this.txtConsole.append(text + "\n");
 		this.txtConsoleScrollBar.setValue(this.txtConsoleScrollBar.getMaximum());
