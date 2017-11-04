@@ -105,7 +105,7 @@ public class MozartFrame extends JFrame {
 			btnPlay.addActionListener(new ActionListener() {
 				private MozartFrame frame;
 
-				public void actionPerformed(ActionEvent ae)  {
+				public void actionPerformed(ActionEvent ae) {
 					MozartFrame frame = this.frame;
 					new SwingWorker<Void, Void>() {
 						public Void doInBackground() {
@@ -121,8 +121,7 @@ public class MozartFrame extends JFrame {
 								arrangement = new MozartArrangement(10);
 								instrument = new MozartInstrument();
 								for (int i = 0; i < 6; i++) {
-									arrangement
-											.addPhrase(new MozartPhrase(scale, MozartOctaveType.SIXTH, random,  60));
+									arrangement.addPhrase(new MozartPhrase(scale, MozartOctaveType.SIXTH, random, 60));
 								}
 								arrangement.create();
 								instrument.open();
@@ -244,6 +243,25 @@ public class MozartFrame extends JFrame {
 		}
 	}
 
+	public int getPhraseLength() throws MozartRuntimeException {
+		int retVal;
+		try {
+			if (this.txtPhraseLength == null) {
+				throw new MozartRuntimeException(this.getClass().getName() + ": txtPhraseLength is null.");
+			}
+			retVal = Integer.parseInt(this.txtPhraseLength.getText());
+			if (retVal < 1 | retVal > 200) {
+				throw new MozartRuntimeException(
+						this.getClass().getName() + ": phrase length must be between 1 and 200.");
+			}
+			return retVal;
+		} catch (MozartRuntimeException e) {
+			throw new MozartRuntimeException(e);
+		} catch (NumberFormatException e) {
+			throw new MozartRuntimeException(e);
+		}
+	}
+
 	public MozartScaleType getScale() throws MozartRuntimeException {
 		MozartScaleType retVal;
 		String selectedScale;
@@ -261,6 +279,25 @@ public class MozartFrame extends JFrame {
 			}
 			return retVal;
 		} catch (MozartRuntimeException e) {
+			throw new MozartRuntimeException(e);
+		}
+	}
+
+	public int getSongLength() throws MozartRuntimeException {
+		int retVal;
+		try {
+			if (this.txtSongLength == null) {
+				throw new MozartRuntimeException(this.getClass().getName() + ": txtSongLength is null.");
+			}
+			retVal = Integer.parseInt(this.txtSongLength.getText());
+			if (retVal < 1 | retVal > 200) {
+				throw new MozartRuntimeException(
+						this.getClass().getName() + ": song length must be between 1 and 200.");
+			}
+			return retVal;
+		} catch (MozartRuntimeException e) {
+			throw new MozartRuntimeException(e);
+		} catch (NumberFormatException e) {
 			throw new MozartRuntimeException(e);
 		}
 	}
