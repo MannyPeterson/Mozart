@@ -73,11 +73,13 @@ public class MozartPhrase {
 	private void create() throws MozartRuntimeException {
 		ArrayList<MozartNote> phrase;
 		MozartNote patternNote;
+		int i;
 		int scaleIndex;
 		int patternsIndex;
 		int patternIndex;
 		int rootNoteIndex;
 		try {
+			i = 0;
 			scaleIndex = 0;
 			rootNoteIndex = 0;
 			patternsIndex = 0;
@@ -90,7 +92,7 @@ public class MozartPhrase {
 				}
 				scaleIndex += 1;
 			}
-			for (int i = 0; i < this.getLength(); i++) {
+			do {
 				patternsIndex = this.getRandom().nextInt(this.getPattern().length);
 				for (patternIndex = 0; patternIndex < this.getPattern()[patternsIndex].length; patternIndex++) {
 					patternNote = this.getScale().getScale()[rootNoteIndex
@@ -98,8 +100,11 @@ public class MozartPhrase {
 					phrase.add(new MozartNote(MozartNoteType.PITCH, patternNote.getPitch(), patternNote.getOctave(),
 							MozartLengthType.QUARTER));
 					i += 1;
+					if (i >= this.getLength()) {
+						break;
+					}
 				}
-			}
+			} while (i < this.getLength());
 			this.setPhrase(new MozartNote[phrase.size()]);
 			this.setPhrase(phrase.toArray(this.getPhrase()));
 			return;

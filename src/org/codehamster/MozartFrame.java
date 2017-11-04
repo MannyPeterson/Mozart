@@ -117,11 +117,13 @@ public class MozartFrame extends JFrame {
 								random = new Random(System.currentTimeMillis());
 								frame.writeConsole("Scale: " + frame.getScale().getString());
 								frame.writeConsole("Key: " + frame.getKey().getString());
+								frame.writeConsole("Phrase Length: " + frame.getPhraseLength());
+								frame.writeConsole("Song Length: " + frame.getSongLength());
 								scale = new MozartScale(frame.getScale(), frame.getKey());
-								arrangement = new MozartArrangement(10);
+								arrangement = new MozartArrangement(frame.getSongLength());
 								instrument = new MozartInstrument();
 								for (int i = 0; i < 6; i++) {
-									arrangement.addPhrase(new MozartPhrase(scale, MozartOctaveType.SIXTH, random, 60));
+									arrangement.addPhrase(new MozartPhrase(scale, MozartOctaveType.SIXTH, random, frame.getPhraseLength()));
 								}
 								arrangement.create();
 								instrument.open();
