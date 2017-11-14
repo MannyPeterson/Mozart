@@ -74,7 +74,7 @@ public class MozartInstrumentNote {
 
 	private void setTTL(int TTL) {
 		try {
-			if (ticks < 0) {
+			if (TTL < 0) {
 				throw new MozartRuntimeException(this.getClass().getName() + ": TTL is less than zero.");
 			}
 			this.TTL = TTL;
